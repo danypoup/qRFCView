@@ -123,7 +123,7 @@ void MainWindow::getrfc()
   // Load a RFC number
   bool bOK;
   int iRFCNum = QInputDialog::getInteger(this, tr("Please enter a RFC number"),
-                                             tr("RFC#:"), 0, 1, 5000, 1, &bOK);
+                                             tr("RFC#:"), 0, 1, 99999, 1, &bOK);
   if (bOK)
     RFCLoad( iRFCNum );
 }
@@ -254,7 +254,7 @@ void MainWindow::print()
 void MainWindow::about()
 {
     QMessageBox::about(this, tr("About qRFCView"),
-            tr("<b>qRFCView v0.62</b><br> A smart RFC Viewer using the Qt4 library.<br><br> Mitsubishi Electric, 2005"));
+            tr("<b>qRFCView v0.63</b><br /> A smart RFC Viewer using the Qt4 library.<br><br> Mitsubishi Electric, 2005<br /><br /><a href=\"http://qrfcview.berlios.de/\">http://qrfcview.berlios.de/</a><br /><br /><small>Small Bugfix by Josef Freundorfer <a href=\"http://www.freundorfer.info\">http://www.freundorfer.info</a></small>"));
 }
 
 void MainWindow::updateMenus()

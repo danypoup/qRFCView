@@ -18,10 +18,10 @@
 
 == How to install it? ==
 
- qRFCView requires the Trolltech Qt4 library that is available under MAC OS, 
- Windows and Linux platforms. Trolltech's dual license policy provides versions 
+ qRFCView requires the Nokia Qt4 library that is available under MAC OS, 
+ Windows and Linux platforms. Nokia's dual license policy provides versions 
  of Qt under the terms of the GNU General Public License (GPL). It can be
- downloaded from http://www.trolltech.com/products/qt/downloads.
+ downloaded from http://qt.nokia.com/products/qt/downloads.
  
  * Win32 building (WinNT/Win2k/WinXP)
  Makefile generation: qmake -win32 rfcview.pro
@@ -37,6 +37,7 @@
  installer file. The following DLLs will be added to the windows system
  directory:
 	- mingwm10.dll
+	- libgcc_s_dw2-1.dll
     - QtCore4.dll
     - QtDesignerComponents4.dll
     - QtGui4.dll

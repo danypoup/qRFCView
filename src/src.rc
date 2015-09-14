@@ -11,10 +11,10 @@ IDR_MAINFRAME           ICON    DISCARDABLE     "..\\images\\rfcview.ico"
              VALUE "FileDescription", "qRFCView"
              VALUE "OriginalFilename", "qrfcview.exe"
              VALUE "CompanyName", "Mitsubishi Electric ITE-TCL"
-             VALUE "FileVersion", "0.62"
+             VALUE "FileVersion", "0.63"
              VALUE "LegalCopyright", "..."
              VALUE "ProductName", "qRFCView"
-             VALUE "ProductVersion", "0.62"
+             VALUE "ProductVersion", "0.63"
          }
      }
      BLOCK "VarFileInfo" {

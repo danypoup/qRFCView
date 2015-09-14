@@ -11,7 +11,7 @@
 ${StrStr}
 
 Name "qRFCView"
-!define QRFCVIEW_VERSION "0.62"
+!define QRFCVIEW_VERSION "0.63"
 
 ;General
 OutFile "qrfcview-${QRFCVIEW_VERSION}-setup.exe"
@@ -64,6 +64,7 @@ Section $(TITLE_qrfcview) Sec_qrfcview
   File "..\LICENSE"
   SetOutPath $INSTDIR\bin
   File "bin\mingwm10.dll"
+  File "bin\libgcc_s_dw2-1.dll"
   File "bin\QtCore4.dll"
   File "bin\QtDesignerComponents4.dll"
   File "bin\QtGui4.dll"
@@ -87,7 +88,7 @@ Section $(TITLE_qrfcview) Sec_qrfcview
   ;Write language to the registry (for the uninstaller)
   WriteRegStr HKLM SOFTWARE\MELCO\qrfcview "Installer Language" $LANGUAGE
 
-  GetFullPathName /SHORT $SHORTINSTDIR $INSTDIR
+  GetFullPathName /SHORT $0 $INSTDIR
 SectionEnd
 
 ;--------------------------------
@@ -111,6 +112,7 @@ Section "Uninstall"
   RMDir  "$SMPROGRAMS\qrfcview"
   ; remove files
   Delete "$INSTDIR\bin\mingwm10.dll"
+  Delete "$INSTDIR\bin\libgcc_s_dw2-1.dll"
   Delete "$INSTDIR\bin\QtCore4.dll"
   Delete "$INSTDIR\bin\QtDesignerComponents4.dll"
   Delete "$INSTDIR\bin\QtGui4.dll"
