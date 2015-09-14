@@ -24,6 +24,8 @@
 #include <qtextbrowser.h>
 class QStringList;
 
+#include <stdint.h>
+
 /**
 @author Romain Rollet
 */

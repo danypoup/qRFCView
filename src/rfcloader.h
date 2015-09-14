@@ -25,6 +25,8 @@
 #include <QStringList>
 #include <QMap>
 
+#include <stdint.h>
+
 /**
 @author Romain Rollet
 */

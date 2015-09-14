@@ -23,6 +23,8 @@
 #include <QStringList>
 #include <ui_setdirectory_dlg.h>
 
+#include <stdint.h>
+
 /**
 @author Romain Rollet
 */

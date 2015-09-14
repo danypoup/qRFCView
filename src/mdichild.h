@@ -25,6 +25,8 @@
 
     #include <QSplitter>
 
+#include <stdint.h>
+
 #define PARSER_NORMALTEXT 0
 #define PARSER_BIBTEXT 1
 #define PARSER_HEADER 2

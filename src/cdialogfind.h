@@ -24,6 +24,8 @@
 #include <qdialog.h>
 #include <ui_find_dlg.h>
 
+#include <stdint.h>
+
 #define FIND_OPTIONSFLAG_REGEXP   0x01
 #define FIND_OPTIONSFLAG_CASE     0x02
 #define FIND_OPTIONSFLAG_WHOLE    0x04

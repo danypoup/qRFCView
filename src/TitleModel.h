@@ -30,6 +30,8 @@
 #include <QModelIndex>
 #include <QVariant>
 
+#include <stdint.h>
+
 #define MAX_TITLE_LEVEL 16
 
 class CTitleItem;

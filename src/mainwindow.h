@@ -25,6 +25,8 @@
 #include <QMainWindow>
 #include <QDir>
 
+#include <stdint.h>
+
 class QAction;
 class QMenu;
 class QWorkspace;
