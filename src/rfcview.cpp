@@ -19,28 +19,25 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-
 #include <QFile>
 #include <QIcon>
 #include <QApplication>
 #include "mainwindow.h"
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
-     Q_INIT_RESOURCE(rfcview);
-     QApplication app(argc, argv);
-        
-     app.setWindowIcon(QIcon(":/images/rfcview.png"));   
-     MainWindow mainWin;
-     mainWin.show();
-     if (argc>1)
-     {
-       if (QFile::exists(argv[1]))
-       {
-         mainWin.RFCReady(argv[1]);
-         QFileInfo qFileInfo(argv[1]);
-         mainWin.SetCurrentDir(qFileInfo.dir());
-       }
-     }
-     return app.exec();
+    Q_INIT_RESOURCE(rfcview);
+    QApplication app(argc, argv);
+
+    app.setWindowIcon(QIcon(":/images/rfcview.png"));
+    MainWindow mainWin;
+    mainWin.show();
+    if (argc > 1) {
+        if (QFile::exists(argv[1])) {
+            mainWin.RFCReady(argv[1]);
+            QFileInfo qFileInfo(argv[1]);
+            mainWin.SetCurrentDir(qFileInfo.dir());
+        }
+    }
+    return app.exec();
 }

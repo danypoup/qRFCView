@@ -19,7 +19,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-
 #ifndef CPRINTDIALOG_H
 #define CPRINTDIALOG_H
 
@@ -27,13 +26,11 @@
 /**
 @author Romain Rollet
 */
-class CPrintDialog : public QPrintDialog
-{
-Q_OBJECT
+class CPrintDialog : public QPrintDialog {
+    Q_OBJECT
 public:
-    CPrintDialog(QPrinter *p, QWidget *parent = 0);
+    CPrintDialog(QPrinter* p, QWidget* parent = 0);
     ~CPrintDialog();
-  
 };
 
 #endif

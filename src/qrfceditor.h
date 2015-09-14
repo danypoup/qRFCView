@@ -19,7 +19,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-
 #ifndef QRFCEDITOR_H
 #define QRFCEDITOR_H
 
@@ -31,25 +30,24 @@ class QStringList;
 /**
 @author Romain Rollet
 */
-class QRFCEditor : public QTextBrowser
-{
-Q_OBJECT
+class QRFCEditor : public QTextBrowser {
+    Q_OBJECT
 public:
-    QRFCEditor(QWidget *parent = 0);
+    QRFCEditor(QWidget* parent = 0);
 
     ~QRFCEditor();
-  
-    void setSource ( const QUrl & name );
-    void scrollToAnchor2 ( const QString & name );
-    bool isBackwardAvailable ();
-    bool isForwardAvailable ();
-    
+
+    void setSource(const QUrl& name);
+    void scrollToAnchor2(const QString& name);
+    bool isBackwardAvailable();
+    bool isForwardAvailable();
+
 signals:
-    void RFCReq(uint32_t); // Signal emitted when a new RFC is required    
+    void RFCReq(uint32_t); // Signal emitted when a new RFC is required
 public slots:
-    void backward ();
-    void forward ();
-    
+    void backward();
+    void forward();
+
 private:
     QList<int> m_qPositionPath;
     int m_iCurrentPositionIdx;

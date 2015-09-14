@@ -19,7 +19,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-
 #include <QtGui>
 #include <QFontDialog>
 #include <QHttp>
@@ -34,7 +33,8 @@
 #include "qrfceditor.h"
 #include "cprintdialog.h"
 
-MainWindow::MainWindow():m_qLastOpenDir(".")
+MainWindow::MainWindow()
+    : m_qLastOpenDir(".")
 {
     m_qTabWidget = new QTabWidget(this);
 
@@ -42,16 +42,16 @@ MainWindow::MainWindow():m_qLastOpenDir(".")
 
     connect(m_qTabWidget, SIGNAL(currentChanged(int)),
             this, SLOT(updateMenus()));
-            /*
+    /*
     windowMapper = new QSignalMapper(this);
     connect(windowMapper, SIGNAL(mapped(QWidget *)),
             workspace, SLOT(setActiveWindow(QWidget *)));
             */
     readSettings();
     QUrl qURL(m_qRFCURL);
-    m_pRFCLoader=new QRFCLoader(this);
-    connect(m_pRFCLoader, SIGNAL(done(QString)),this, SLOT(RFCReady(QString)));
-    connect(m_pRFCLoader, SIGNAL(start(QString)),this, SLOT(RFCStart(QString)));
+    m_pRFCLoader = new QRFCLoader(this);
+    connect(m_pRFCLoader, SIGNAL(done(QString)), this, SLOT(RFCReady(QString)));
+    connect(m_pRFCLoader, SIGNAL(start(QString)), this, SLOT(RFCStart(QString)));
     m_pRFCLoader->SetDownloadURL(qURL);
     m_pRFCLoader->SetDirectories(m_qDirectoryList, m_iDefaultDirectory);
 
@@ -61,14 +61,13 @@ MainWindow::MainWindow():m_qLastOpenDir(".")
     createStatusBar();
     updateMenus();
     //m_pDialogFind=NULL;
-    m_pDialogFind=new CDialogFind(  this);
+    m_pDialogFind = new CDialogFind(this);
     connect(m_pDialogFind, SIGNAL(findnext()), this, SLOT(findnext()));
     setWindowTitle(tr("qRFCView"));
     //m_pRFCLoader->GetFile(794);
-
 }
 
-void MainWindow::closeEvent(QCloseEvent *event)
+void MainWindow::closeEvent(QCloseEvent* event)
 {
     //workspace->closeAllWindows();
     /*
@@ -82,25 +81,24 @@ void MainWindow::closeEvent(QCloseEvent *event)
     event->accept();
 }
 
-
 void MainWindow::open()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, QString(), m_qLastOpenDir.absolutePath() );
+    QString fileName = QFileDialog::getOpenFileName(this, QString(), m_qLastOpenDir.absolutePath());
     QFileInfo qFileInfo(fileName);
 
     if (!fileName.isEmpty()) {
-        MdiChild *existing = findMdiChild(fileName);
+        MdiChild* existing = findMdiChild(fileName);
         if (existing) {
             m_qTabWidget->setCurrentWidget(existing);
             return;
         }
 
-        MdiChild *child = createMdiChild(qFileInfo.fileName());
+        MdiChild* child = createMdiChild(qFileInfo.fileName());
         child->setCurrentFont(m_qFont);
         if (child->loadFile(fileName)) {
             statusBar()->showMessage(tr("File loaded"), 2000);
             child->show();
-            m_qLastOpenDir=qFileInfo.dir();
+            m_qLastOpenDir = qFileInfo.dir();
         } else {
             child->close();
         }
@@ -109,26 +107,24 @@ void MainWindow::open()
 
 void MainWindow::close()
 {
-  MdiChild *pMdiChild=activeMdiChild();
+    MdiChild* pMdiChild = activeMdiChild();
 
-  if (pMdiChild)
-  {
-    m_qTabWidget->removeTab(m_qTabWidget->currentIndex());
-    delete pMdiChild;
-  }
-  updateMenus();
+    if (pMdiChild) {
+        m_qTabWidget->removeTab(m_qTabWidget->currentIndex());
+        delete pMdiChild;
+    }
+    updateMenus();
 }
 
 void MainWindow::getrfc()
 {
-  // Load a RFC number
-  bool bOK;
-  int iRFCNum = QInputDialog::getInteger(this, tr("Please enter a RFC number"),
-                                             tr("RFC#:"), 0, 1, 99999, 1, &bOK);
-  if (bOK)
-    RFCLoad( iRFCNum );
+    // Load a RFC number
+    bool bOK;
+    int iRFCNum = QInputDialog::getInteger(this, tr("Please enter a RFC number"),
+                                           tr("RFC#:"), 0, 1, 99999, 1, &bOK);
+    if (bOK)
+        RFCLoad(iRFCNum);
 }
-
 
 void MainWindow::copy()
 {
@@ -144,123 +140,113 @@ void MainWindow::findOpen()
 
 void MainWindow::findnext()
 {
-  bool bResult;
-  uint32_t iOptionFlags;
+    bool bResult;
+    uint32_t iOptionFlags;
 
-  QString qTextToFind=m_pDialogFind->GetTextToFind();
-  iOptionFlags=m_pDialogFind->GetOptionFlags();
-  MdiChild *pMdiChild=activeMdiChild();
-  if (pMdiChild && !qTextToFind.isEmpty() )
-  {
-    bResult=pMdiChild->FindText(qTextToFind, iOptionFlags );
-    if (!bResult)
-      statusBar()->showMessage(tr("No more occurence"), 3000);
-    else
-      statusBar()->clearMessage();
-    iOptionFlags|=FIND_OPTIONSFLAG_CURSOR;
-    m_pDialogFind->SetOptionFlags(iOptionFlags);
-  }
-  updateMenus();
+    QString qTextToFind = m_pDialogFind->GetTextToFind();
+    iOptionFlags = m_pDialogFind->GetOptionFlags();
+    MdiChild* pMdiChild = activeMdiChild();
+    if (pMdiChild && !qTextToFind.isEmpty()) {
+        bResult = pMdiChild->FindText(qTextToFind, iOptionFlags);
+        if (!bResult)
+            statusBar()->showMessage(tr("No more occurence"), 3000);
+        else
+            statusBar()->clearMessage();
+        iOptionFlags |= FIND_OPTIONSFLAG_CURSOR;
+        m_pDialogFind->SetOptionFlags(iOptionFlags);
+    }
+    updateMenus();
 }
 
 void MainWindow::findprev()
 {
-  bool bResult;
-  uint32_t iOptionFlags;
+    bool bResult;
+    uint32_t iOptionFlags;
 
-  QString qTextToFind=m_pDialogFind->GetTextToFind();
-  iOptionFlags=m_pDialogFind->GetOptionFlags();
-  MdiChild *pMdiChild=activeMdiChild();
-  if (pMdiChild && !qTextToFind.isEmpty() )
-  {
-    iOptionFlags|=FIND_OPTIONSFLAG_CURSOR|FIND_OPTIONSFLAG_BACKWARD;
-    bResult=pMdiChild->FindText(qTextToFind, iOptionFlags );
-    if (!bResult)
-      statusBar()->showMessage(tr("No more occurence"), 3000);
-    else
-      statusBar()->clearMessage();
-
-  }
+    QString qTextToFind = m_pDialogFind->GetTextToFind();
+    iOptionFlags = m_pDialogFind->GetOptionFlags();
+    MdiChild* pMdiChild = activeMdiChild();
+    if (pMdiChild && !qTextToFind.isEmpty()) {
+        iOptionFlags |= FIND_OPTIONSFLAG_CURSOR | FIND_OPTIONSFLAG_BACKWARD;
+        bResult = pMdiChild->FindText(qTextToFind, iOptionFlags);
+        if (!bResult)
+            statusBar()->showMessage(tr("No more occurence"), 3000);
+        else
+            statusBar()->clearMessage();
+    }
 }
 
 void MainWindow::forward()
 {
-  MdiChild *pMdiChild=activeMdiChild();
-  if (pMdiChild)
-    pMdiChild->m_pTextEdit->forward();
+    MdiChild* pMdiChild = activeMdiChild();
+    if (pMdiChild)
+        pMdiChild->m_pTextEdit->forward();
 }
-
 
 void MainWindow::backward()
 {
-  MdiChild *pMdiChild=activeMdiChild();
-  if (pMdiChild)
-    pMdiChild->m_pTextEdit->backward();
+    MdiChild* pMdiChild = activeMdiChild();
+    if (pMdiChild)
+        pMdiChild->m_pTextEdit->backward();
 }
 
 void MainWindow::setDirectories()
 {
-    CDialogSetDirectory *pDialog=new CDialogSetDirectory(&m_qDirectoryList, m_iDefaultDirectory, m_qRFCURL, this);
-    if (pDialog->exec()==QDialog::Accepted)
-    {
-      m_iDefaultDirectory=pDialog->GetDirectoryList(&m_qDirectoryList);
-      m_qRFCURL=pDialog->GetRFCURL();
-      QUrl qURL(m_qRFCURL);
-      m_pRFCLoader->SetDownloadURL(qURL);
-      m_pRFCLoader->SetDirectories(m_qDirectoryList, m_iDefaultDirectory);
+    CDialogSetDirectory* pDialog = new CDialogSetDirectory(&m_qDirectoryList, m_iDefaultDirectory, m_qRFCURL, this);
+    if (pDialog->exec() == QDialog::Accepted) {
+        m_iDefaultDirectory = pDialog->GetDirectoryList(&m_qDirectoryList);
+        m_qRFCURL = pDialog->GetRFCURL();
+        QUrl qURL(m_qRFCURL);
+        m_pRFCLoader->SetDownloadURL(qURL);
+        m_pRFCLoader->SetDirectories(m_qDirectoryList, m_iDefaultDirectory);
     }
     delete pDialog;
-
 }
 
 void MainWindow::setFont()
 {
     bool bOK;
-    MdiChild *pMDIChild;
-    QFont qFont=QFontDialog::getFont(&bOK, m_qFont, this );
-    m_qFont=qFont;
-    if (bOK)
-    {
-      for (int i=0;i<m_qTabWidget->count();i++)
-      {
-        pMDIChild = qobject_cast<MdiChild *>(m_qTabWidget->widget(i));
-        pMDIChild->setCurrentFont(m_qFont);
-      }
+    MdiChild* pMDIChild;
+    QFont qFont = QFontDialog::getFont(&bOK, m_qFont, this);
+    m_qFont = qFont;
+    if (bOK) {
+        for (int i = 0; i < m_qTabWidget->count(); i++) {
+            pMDIChild = qobject_cast<MdiChild*>(m_qTabWidget->widget(i));
+            pMDIChild->setCurrentFont(m_qFont);
+        }
     }
 }
 
 void MainWindow::print()
 {
-  MdiChild *pMdiChild=activeMdiChild();
-  if (pMdiChild)
-  {
-    QPrinter printer(QPrinter::PrinterResolution);
+    MdiChild* pMdiChild = activeMdiChild();
+    if (pMdiChild) {
+        QPrinter printer(QPrinter::PrinterResolution);
 
-    printer.setFullPage(true);
-    printer.setNumCopies(2);
-    QPrintDialog dlg(&printer, this);
-    //dlg.setPrintRange(QAbstractPrintDialog::PageRange);
-    dlg.setMinMax(1, pMdiChild->GetNbPages() );
-    //dlg.setFromTo(1, 2);
-    //dlg.setEnabledOptions(QAbstractPrintDialog::PrintPageRange);
+        printer.setFullPage(true);
+        printer.setNumCopies(2);
+        QPrintDialog dlg(&printer, this);
+        //dlg.setPrintRange(QAbstractPrintDialog::PageRange);
+        dlg.setMinMax(1, pMdiChild->GetNbPages());
+        //dlg.setFromTo(1, 2);
+        //dlg.setEnabledOptions(QAbstractPrintDialog::PrintPageRange);
 
-    if (dlg.exec() == QDialog::Accepted) {
-        pMdiChild->Print(&printer, dlg.printRange()==QAbstractPrintDialog::AllPages, dlg.fromPage(), dlg.toPage() );
-        //pMdiChild->Print(&printer, false, 4,6);
+        if (dlg.exec() == QDialog::Accepted) {
+            pMdiChild->Print(&printer, dlg.printRange() == QAbstractPrintDialog::AllPages, dlg.fromPage(), dlg.toPage());
+            //pMdiChild->Print(&printer, false, 4,6);
+        }
     }
-
-  }
 }
 
 void MainWindow::about()
 {
     QMessageBox::about(this, tr("About qRFCView"),
-            tr("<b>qRFCView v0.63</b><br /> A smart RFC Viewer using the Qt4 library.<br><br> Mitsubishi Electric, 2005<br /><br /><a href=\"http://qrfcview.berlios.de/\">http://qrfcview.berlios.de/</a><br /><br /><small>Small Bugfix by Josef Freundorfer <a href=\"http://www.freundorfer.info\">http://www.freundorfer.info</a></small>"));
+                       tr("<b>qRFCView v0.63</b><br /> A smart RFC Viewer using the Qt4 library.<br><br> Mitsubishi Electric, 2005<br /><br /><a href=\"http://qrfcview.berlios.de/\">http://qrfcview.berlios.de/</a><br /><br /><small>Small Bugfix by Josef Freundorfer <a href=\"http://www.freundorfer.info\">http://www.freundorfer.info</a></small>"));
 }
 
 void MainWindow::updateMenus()
 {
-/*    
+    /*    
     bool hasMdiChild = (activeMdiChild() != 0);
 
     closeAct->setEnabled(hasMdiChild);
@@ -271,16 +257,15 @@ void MainWindow::updateMenus()
     previousAct->setEnabled(hasMdiChild);
     separatorAct->setVisible(hasMdiChild);
 */
-    bool hasSelection = (activeMdiChild() &&
-                          activeMdiChild()->hasSelection());
+    bool hasSelection = (activeMdiChild() && activeMdiChild()->hasSelection());
     copyAct->setEnabled(hasSelection);
-    findAct->setEnabled( activeMdiChild()!=NULL);
-    printAct->setEnabled( activeMdiChild()!=NULL);
-    findnextAct->setEnabled( activeMdiChild()!=NULL && (!m_pDialogFind->GetTextToFind().isEmpty()) );
-    findprevAct->setEnabled( activeMdiChild()!=NULL && (!m_pDialogFind->GetTextToFind().isEmpty()) );
-    forwardAct->setEnabled( activeMdiChild()!=NULL && activeMdiChild()->m_pTextEdit->isForwardAvailable() );
-    backwardAct->setEnabled( activeMdiChild()!=NULL && activeMdiChild()->m_pTextEdit->isBackwardAvailable() );
-    closeAct->setEnabled(activeMdiChild()!=NULL);
+    findAct->setEnabled(activeMdiChild() != NULL);
+    printAct->setEnabled(activeMdiChild() != NULL);
+    findnextAct->setEnabled(activeMdiChild() != NULL && (!m_pDialogFind->GetTextToFind().isEmpty()));
+    findprevAct->setEnabled(activeMdiChild() != NULL && (!m_pDialogFind->GetTextToFind().isEmpty()));
+    forwardAct->setEnabled(activeMdiChild() != NULL && activeMdiChild()->m_pTextEdit->isForwardAvailable());
+    backwardAct->setEnabled(activeMdiChild() != NULL && activeMdiChild()->m_pTextEdit->isBackwardAvailable());
+    closeAct->setEnabled(activeMdiChild() != NULL);
 }
 
 void MainWindow::updateWindowMenu()
@@ -319,16 +304,16 @@ void MainWindow::updateWindowMenu()
     }*/
 }
 
-MdiChild *MainWindow::createMdiChild(const QString &qTitle)
+MdiChild* MainWindow::createMdiChild(const QString& qTitle)
 {
-    MdiChild *child = new MdiChild();
+    MdiChild* child = new MdiChild();
     m_qTabWidget->addTab(child, qTitle);
 
     connect(child, SIGNAL(copyAvailable(bool)),
             copyAct, SLOT(setEnabled(bool)));
-    connect(child->m_pTextEdit, SIGNAL(RFCReq( uint32_t )), this, SLOT(RFCLoad( uint32_t  )) );
-    connect(child->m_pTextEdit, SIGNAL(forwardAvailable(bool)), forwardAct, SLOT(setEnabled(bool)) );
-    connect(child->m_pTextEdit, SIGNAL(backwardAvailable(bool)), backwardAct, SLOT(setEnabled(bool)) );
+    connect(child->m_pTextEdit, SIGNAL(RFCReq(uint32_t)), this, SLOT(RFCLoad(uint32_t)));
+    connect(child->m_pTextEdit, SIGNAL(forwardAvailable(bool)), forwardAct, SLOT(setEnabled(bool)));
+    connect(child->m_pTextEdit, SIGNAL(backwardAvailable(bool)), backwardAct, SLOT(setEnabled(bool)));
     m_qTabWidget->setCurrentWidget(child);
     return child;
 }
@@ -345,15 +330,13 @@ void MainWindow::createActions()
     loadAct->setStatusTip(tr("Load a RFC from its number"));
     connect(loadAct, SIGNAL(triggered()), this, SLOT(getrfc()));
 
-    closeAct = new QAction(QIcon(":/images/close.png"),tr("Cl&ose"), this);
+    closeAct = new QAction(QIcon(":/images/close.png"), tr("Cl&ose"), this);
     closeAct->setShortcut(tr("Ctrl+F4"));
     closeAct->setStatusTip(tr("Close the active window"));
     connect(closeAct, SIGNAL(triggered()), this, SLOT(close()));
 
-
     printAct = new QAction(QIcon(":/images/print.png"), tr("&Print..."), this);
     connect(printAct, SIGNAL(triggered()), this, SLOT(print()));
-
 
     exitAct = new QAction(tr("E&xit"), this);
     exitAct->setShortcut(tr("Ctrl+Q"));
@@ -363,7 +346,7 @@ void MainWindow::createActions()
     copyAct = new QAction(QIcon(":/images/copy.png"), tr("&Copy"), this);
     copyAct->setShortcut(tr("Ctrl+C"));
     copyAct->setStatusTip(tr("Copy the current selection's contents to the "
-                              "clipboard"));
+                             "clipboard"));
     connect(copyAct, SIGNAL(triggered()), this, SLOT(copy()));
 
     setFontAct = new QAction(QIcon(), tr("&Set Font..."), this);
@@ -374,7 +357,7 @@ void MainWindow::createActions()
     forwardAct = new QAction(QIcon(":/images/forward.png"), tr("&Forward"), this);
     connect(forwardAct, SIGNAL(triggered()), this, SLOT(forward()));
     backwardAct = new QAction(QIcon(":/images/backward.png"), tr("&Backward"), this);
-    connect(backwardAct, SIGNAL(triggered()),this, SLOT(backward()));
+    connect(backwardAct, SIGNAL(triggered()), this, SLOT(backward()));
     findAct = new QAction(QIcon(":/images/find.png"), tr("&Find..."), this);
     findAct->setShortcut(tr("Ctrl+F"));
     findAct->setStatusTip(tr("Find a string in the currently opened file"));
@@ -476,10 +459,10 @@ void MainWindow::createToolBars()
 
 void MainWindow::createStatusBar()
 {
-    m_pProgressBar=new QProgressBar();
-    m_pProgressBar->setRange(0,100);
+    m_pProgressBar = new QProgressBar();
+    m_pProgressBar->setRange(0, 100);
     m_pProgressBar->setValue(50);
-    connect(m_pRFCLoader->GetQHttp(), SIGNAL(dataReadProgress(int,int)), this, SLOT( updateRFCProgress(int,int)));
+    connect(m_pRFCLoader->GetQHttp(), SIGNAL(dataReadProgress(int, int)), this, SLOT(updateRFCProgress(int, int)));
     statusBar()->showMessage(tr("Ready"));
     //statusBar()->addWidget(m_pProgressBar, 0);
     //qProgressBar.show();
@@ -491,29 +474,28 @@ void MainWindow::readSettings()
     QSettings settings("MELCO", "qRFCView");
     QPoint pos = settings.value("pos", QPoint(200, 200)).toPoint();
     QSize size = settings.value("size", QSize(400, 400)).toSize();
-    m_qFont.setFamily(settings.value("Font_family", m_qFont.family()).toString() );
-    m_qFont.setPointSize(settings.value("Font_size",   m_qFont.pointSize()).toInt() );
+    m_qFont.setFamily(settings.value("Font_family", m_qFont.family()).toString());
+    m_qFont.setPointSize(settings.value("Font_size", m_qFont.pointSize()).toInt());
     m_qFont.setWeight(settings.value("Font_weight", m_qFont.weight()).toInt());
     m_qFont.setItalic(settings.value("Font_italic", m_qFont.italic()).toBool());
-    m_qDirectoryList=settings.value("Directories", QStringList(QString(".") )).toStringList();
-    m_iDefaultDirectory=settings.value("DefaultDirectory", 0).toInt();
-    m_qRFCURL=settings.value("RFC_URL", QString("http://www.ietf.org/rfc/") ).toString();
+    m_qDirectoryList = settings.value("Directories", QStringList(QString("."))).toStringList();
+    m_iDefaultDirectory = settings.value("DefaultDirectory", 0).toInt();
+    m_qRFCURL = settings.value("RFC_URL", QString("http://www.ietf.org/rfc/")).toString();
 
     move(pos);
     resize(size);
-    for (i=0;i<m_qDirectoryList.count();i++)
-      if (m_qDirectoryList[i].isEmpty())
-        m_qDirectoryList.removeAt(i);
-    if (m_qDirectoryList.count()==0)
-    {
-      m_qDirectoryList=QStringList(QString("."));
-      m_iDefaultDirectory=0;
+    for (i = 0; i < m_qDirectoryList.count(); i++)
+        if (m_qDirectoryList[i].isEmpty())
+            m_qDirectoryList.removeAt(i);
+    if (m_qDirectoryList.count() == 0) {
+        m_qDirectoryList = QStringList(QString("."));
+        m_iDefaultDirectory = 0;
     }
     // Check DefaultDirectory index
-    if (m_iDefaultDirectory>=m_qDirectoryList.size() )
-      m_iDefaultDirectory=0;
+    if (m_iDefaultDirectory >= m_qDirectoryList.size())
+        m_iDefaultDirectory = 0;
     //qDebug() << m_qDirectoryList.count();
-    m_qLastOpenDir=QDir( settings.value("LastOpenedDirectory", m_qDirectoryList[m_iDefaultDirectory]).toString() );
+    m_qLastOpenDir = QDir(settings.value("LastOpenedDirectory", m_qDirectoryList[m_iDefaultDirectory]).toString());
     //m_qLastOpenDir=QDir(m_qDirectoryList[m_iDefaultDirectory]);
 }
 
@@ -523,74 +505,71 @@ void MainWindow::writeSettings()
     settings.setValue("pos", pos());
     settings.setValue("size", size());
     settings.setValue("Font_family", m_qFont.family());
-    settings.setValue("Font_size",   m_qFont.pointSize());
+    settings.setValue("Font_size", m_qFont.pointSize());
     settings.setValue("Font_weight", m_qFont.weight());
     settings.setValue("Font_italic", m_qFont.italic());
     settings.setValue("Directories", m_qDirectoryList);
     settings.setValue("DefaultDirectory", m_iDefaultDirectory);
-    settings.setValue("RFC_URL", m_qRFCURL );
-    settings.setValue("LastOpenedDirectory", m_qLastOpenDir.absolutePath() );
+    settings.setValue("RFC_URL", m_qRFCURL);
+    settings.setValue("LastOpenedDirectory", m_qLastOpenDir.absolutePath());
 }
 
-MdiChild *MainWindow::activeMdiChild()
+MdiChild* MainWindow::activeMdiChild()
 {
 
-    return qobject_cast<MdiChild *>(m_qTabWidget->currentWidget());
+    return qobject_cast<MdiChild*>(m_qTabWidget->currentWidget());
 }
 
-MdiChild *MainWindow::findMdiChild(const QString &fileName)
+MdiChild* MainWindow::findMdiChild(const QString& fileName)
 {
     QString canonicalFilePath = QFileInfo(fileName).canonicalFilePath();
 
-    for (int i=0;i<m_qTabWidget->count();i++)
-    {
-       MdiChild *mdiChild = qobject_cast<MdiChild *>(m_qTabWidget->widget(i));
+    for (int i = 0; i < m_qTabWidget->count(); i++) {
+        MdiChild* mdiChild = qobject_cast<MdiChild*>(m_qTabWidget->widget(i));
         if (mdiChild->currentFile() == canonicalFilePath)
             return mdiChild;
     }
     return 0;
 }
 
-void MainWindow::RFCLoad( uint32_t iRFCNum )
+void MainWindow::RFCLoad(uint32_t iRFCNum)
 {
-  QString qFilename=QString("rfc%1.txt").arg(iRFCNum);
-  QFileInfo qFileInfo;
+    QString qFilename = QString("rfc%1.txt").arg(iRFCNum);
+    QFileInfo qFileInfo;
 
-  // Check if the required RFC is not yet opened
-  for (int i=0;i<m_qTabWidget->count();i++)
-  {
-      MdiChild *mdiChild = qobject_cast<MdiChild *>(m_qTabWidget->widget(i));
-      qFileInfo.setFile(mdiChild->currentFile());
-      if (qFileInfo.fileName() == qFilename)
-      {
-          m_qTabWidget->setCurrentWidget(mdiChild);
-          return;
-      }
-  }
+    // Check if the required RFC is not yet opened
+    for (int i = 0; i < m_qTabWidget->count(); i++) {
+        MdiChild* mdiChild = qobject_cast<MdiChild*>(m_qTabWidget->widget(i));
+        qFileInfo.setFile(mdiChild->currentFile());
+        if (qFileInfo.fileName() == qFilename) {
+            m_qTabWidget->setCurrentWidget(mdiChild);
+            return;
+        }
+    }
 
-  m_pRFCLoader->GetFile(iRFCNum);
+    m_pRFCLoader->GetFile(iRFCNum);
 }
 
-void MainWindow::RFCStart(const QString &qFilename)
+void MainWindow::RFCStart(const QString& qFilename)
 { // Start downloading a RFC file
-  //statusBar()->showMessage(tr("Downloading ")+qFilename);
-  statusBar()->clearMessage();
-  statusBar()->addWidget(m_pProgressBar);
-  m_pProgressBar->show();
+    //statusBar()->showMessage(tr("Downloading ")+qFilename);
+    statusBar()->clearMessage();
+    statusBar()->addWidget(m_pProgressBar);
+    m_pProgressBar->show();
 }
 
-void MainWindow::RFCReady(const QString &qFilename)
+void MainWindow::RFCReady(const QString& qFilename)
 {
-  QFileInfo qFileInfo(qFilename);
-  MdiChild *child = createMdiChild(qFileInfo.fileName());
-  child->setCurrentFont(m_qFont);
-  if (child->loadFile(qFilename)) {
-      child->show();
-  } else {
-      child->close();
-  }
-  statusBar()->showMessage(tr("Load ")+qFilename , 2000);
-  statusBar()->removeWidget(m_pProgressBar);
+    QFileInfo qFileInfo(qFilename);
+    MdiChild* child = createMdiChild(qFileInfo.fileName());
+    child->setCurrentFont(m_qFont);
+    if (child->loadFile(qFilename)) {
+        child->show();
+    } else {
+        child->close();
+    }
+    statusBar()->showMessage(tr("Load ") + qFilename, 2000);
+    statusBar()->removeWidget(m_pProgressBar);
 }
 
 void MainWindow::updateRFCProgress(int bytesRead, int totalBytes)

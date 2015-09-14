@@ -19,7 +19,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-
 #ifndef RFCLOADER_H
 #define RFCLOADER_H
 
@@ -36,42 +35,40 @@ class QHttp;
 class QUrl;
 class QHttpResponseHeader;
 class QFile;
-class QRFCLoader : public QObject
-{
-Q_OBJECT
+class QRFCLoader : public QObject {
+    Q_OBJECT
 private:
-    struct RFCDesc_t
-    {
-      uint32_t iRFCNum;
-      QFile *pFile;
+    struct RFCDesc_t {
+        uint32_t iRFCNum;
+        QFile* pFile;
     };
-    
+
 public:
-    QRFCLoader(QObject *parent = 0);
+    QRFCLoader(QObject* parent = 0);
     ~QRFCLoader();
 
-    void SetDirectories(QStringList &qDirList, uint8_t iDefaultDir);
+    void SetDirectories(QStringList& qDirList, uint8_t iDefaultDir);
     void GetFile(uint32_t iRFCNum);
-    QHttp *GetQHttp() {return m_qHttp;}
-    void SetDownloadURL(QUrl &qURL);
-    
+    QHttp* GetQHttp() { return m_qHttp; }
+    void SetDownloadURL(QUrl& qURL);
+
 signals:
-    void start(const QString &sFilename); 
-    void done(const QString &sFilename); 
-       
+    void start(const QString& sFilename);
+    void done(const QString& sFilename);
+
 private slots:
     void startDownload(int iRequestID);
-    void fileDownload(int iRequestID, bool bError);    
-    void receivedHeader(const QHttpResponseHeader &qResponseHdr);
-    
+    void fileDownload(int iRequestID, bool bError);
+    void receivedHeader(const QHttpResponseHeader& qResponseHdr);
+
 private:
     QStringList m_qDirList;
-    uint8_t m_iDefaultDir;    
+    uint8_t m_iDefaultDir;
     QString m_qIETFSite, m_qIETFPath;
     int m_iCurrentRequestID;
-    
+
     QMap<int, RFCDesc_t> m_RequestList;
-    QHttp *m_qHttp;
+    QHttp* m_qHttp;
 };
 
 #endif

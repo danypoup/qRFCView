@@ -19,7 +19,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-
 #ifndef CDIALOGFIND_H
 #define CDIALOGFIND_H
 
@@ -28,34 +27,32 @@
 
 #include <stdint.h>
 
-#define FIND_OPTIONSFLAG_REGEXP   0x01
-#define FIND_OPTIONSFLAG_CASE     0x02
-#define FIND_OPTIONSFLAG_WHOLE    0x04
-#define FIND_OPTIONSFLAG_CURSOR   0x08
+#define FIND_OPTIONSFLAG_REGEXP 0x01
+#define FIND_OPTIONSFLAG_CASE 0x02
+#define FIND_OPTIONSFLAG_WHOLE 0x04
+#define FIND_OPTIONSFLAG_CURSOR 0x08
 #define FIND_OPTIONSFLAG_BACKWARD 0x10
 
 /**
 @author Romain Rollet
 */
-class CDialogFind : public QDialog
-{
-Q_OBJECT
+class CDialogFind : public QDialog {
+    Q_OBJECT
 public:
-    CDialogFind( QWidget *parent = 0, QStringList *pPrevResearch=NULL, uint32_t iOptionFlags=0);
+    CDialogFind(QWidget* parent = 0, QStringList* pPrevResearch = NULL, uint32_t iOptionFlags = 0);
     ~CDialogFind();
     QString GetTextToFind();
     uint32_t GetOptionFlags();
     void SetOptionFlags(uint32_t iOptionFlags);
-    
+
 signals:
     void findnext();
-    
+
 private slots:
     void find();
-        
+
 private:
-  Ui_findDialog m_ui;
-  
+    Ui_findDialog m_ui;
 };
 
 #endif

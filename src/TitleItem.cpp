@@ -19,16 +19,15 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-
 #include <QStringList>
 
 #include "TitleItem.h"
 
-CTitleItem::CTitleItem(const QString &qTitle, const QString &qAnchor, CTitleItem *parent)
+CTitleItem::CTitleItem(const QString& qTitle, const QString& qAnchor, CTitleItem* parent)
 {
     parentItem = parent;
-    m_qTitle= qTitle;
-    m_qAnchor=qAnchor;
+    m_qTitle = qTitle;
+    m_qAnchor = qAnchor;
 }
 
 CTitleItem::~CTitleItem()
@@ -36,12 +35,12 @@ CTitleItem::~CTitleItem()
     qDeleteAll(childItems);
 }
 
-void CTitleItem::appendChild(CTitleItem *item)
+void CTitleItem::appendChild(CTitleItem* item)
 {
     childItems.append(item);
 }
 
-CTitleItem *CTitleItem::child(int row)
+CTitleItem* CTitleItem::child(int row)
 {
     return childItems.value(row);
 }
@@ -51,7 +50,7 @@ int CTitleItem::childCount() const
     return childItems.count();
 }
 
-CTitleItem *CTitleItem::parent()
+CTitleItem* CTitleItem::parent()
 {
     return parentItem;
 }

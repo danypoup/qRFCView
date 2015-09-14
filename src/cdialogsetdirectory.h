@@ -19,7 +19,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-
 #ifndef CDIALOGSETDIRECTORY_H
 #define CDIALOGSETDIRECTORY_H
 #include <QStringList>
@@ -31,25 +30,24 @@
 @author Romain Rollet
 */
 
-class CDialogSetDirectory : public QDialog
-{
-Q_OBJECT
+class CDialogSetDirectory : public QDialog {
+    Q_OBJECT
 public:
-    CDialogSetDirectory(QStringList *pDirectoryList, uint8_t iDefaultDir, QString &qRFCURL, QWidget *parent = 0);
+    CDialogSetDirectory(QStringList* pDirectoryList, uint8_t iDefaultDir, QString& qRFCURL, QWidget* parent = 0);
 
     ~CDialogSetDirectory();
-    int GetDirectoryList(QStringList *pDirectoryList);
-    uint8_t GetDefaultDir() {return m_iDefaultDirRow;}
-    QString GetRFCURL() {return m_ui.urlLineEdit->text();}
-    
+    int GetDirectoryList(QStringList* pDirectoryList);
+    uint8_t GetDefaultDir() { return m_iDefaultDirRow; }
+    QString GetRFCURL() { return m_ui.urlLineEdit->text(); }
+
 private slots:
     void addDirectoryToList();
-    void remDirectoryFromList();  
+    void remDirectoryFromList();
     void setDefaultDirectory();
-    
+
 private:
-  Ui_directoryDialog m_ui;
-  uint8_t m_iDefaultDirRow;  
+    Ui_directoryDialog m_ui;
+    uint8_t m_iDefaultDirRow;
 };
 
 #endif

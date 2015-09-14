@@ -19,7 +19,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-
 #ifndef TITLEMODEL_H
 #define TITLEMODEL_H
 
@@ -33,30 +32,29 @@
 
 class CTitleItem;
 
-class CTitleModel : public QAbstractItemModel
-{
+class CTitleModel : public QAbstractItemModel {
     Q_OBJECT
 
 public:
-    CTitleModel(const QString &data, QObject *parent = 0);
+    CTitleModel(const QString& data, QObject* parent = 0);
     ~CTitleModel();
 
-    QVariant data(const QModelIndex &index, int role) const;
-    Qt::ItemFlags flags(const QModelIndex &index) const;
+    QVariant data(const QModelIndex& index, int role) const;
+    Qt::ItemFlags flags(const QModelIndex& index) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
     QModelIndex index(int row, int column,
-                      const QModelIndex &parent = QModelIndex()) const;
-    QModelIndex parent(const QModelIndex &index) const;
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
-    int columnCount(const QModelIndex &parent = QModelIndex()) const;
-    bool ParseTitle(const QString &qLevel, const QString &qTitle);
+                      const QModelIndex& parent = QModelIndex()) const;
+    QModelIndex parent(const QModelIndex& index) const;
+    int rowCount(const QModelIndex& parent = QModelIndex()) const;
+    int columnCount(const QModelIndex& parent = QModelIndex()) const;
+    bool ParseTitle(const QString& qLevel, const QString& qTitle);
 
 private:
-    uint8_t m_iCurrentValidTitleNum[MAX_TITLE_LEVEL];      
+    uint8_t m_iCurrentValidTitleNum[MAX_TITLE_LEVEL];
     uint8_t m_iCurrentValidTitleLevel;
-    CTitleItem *m_pCurrentTitleItem[MAX_TITLE_LEVEL];     
+    CTitleItem* m_pCurrentTitleItem[MAX_TITLE_LEVEL];
 
-    CTitleItem *rootItem;
+    CTitleItem* rootItem;
 };
 
 #endif

@@ -19,11 +19,10 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+#ifndef MDICHILD_H
+#define MDICHILD_H
 
-    #ifndef MDICHILD_H
-    #define MDICHILD_H
-
-    #include <QSplitter>
+#include <QSplitter>
 
 #include <stdint.h>
 
@@ -32,53 +31,52 @@
 #define PARSER_HEADER 2
 #define PARSER_TRAILER 3
 
-    class QTreeView;
-    class QRFCEditor;
-    class CTitleModel;
-    class QModelIndex;
-    class QFile;
-    class QUrl;
-    class QPrinter;
-        
-    class MdiChild : public QSplitter
-    {
-        Q_OBJECT
+class QTreeView;
+class QRFCEditor;
+class CTitleModel;
+class QModelIndex;
+class QFile;
+class QUrl;
+class QPrinter;
 
-    public:
-        MdiChild(QWidget *pParent=0);
-        ~MdiChild();
-        bool loadFile(const QString &fileName);
-        QString userFriendlyCurrentFile();
-        QString currentFile() { return curFile; }
-        void copy();
-        bool hasSelection();
-        void setCurrentFont(const QFont &);
-        bool FindText(QString &qTextToFind, uint32_t iOptionFlags);
-        void Print(QPrinter *pPrinter, bool all, int fromPage, int toPage);
-        uint32_t GetNbPages() {return m_iNbPages;}
-                
-    protected:
-        void closeEvent(QCloseEvent *event);
+class MdiChild : public QSplitter {
+    Q_OBJECT
 
-    private:
-        void setCurrentFile(const QString &fileName);
-        QString strippedName(const QString &fullFileName);
-        bool ParseRFCText(const QFile &qFile, QString &qOutput);
+public:
+    MdiChild(QWidget* pParent = 0);
+    ~MdiChild();
+    bool loadFile(const QString& fileName);
+    QString userFriendlyCurrentFile();
+    QString currentFile() { return curFile; }
+    void copy();
+    bool hasSelection();
+    void setCurrentFont(const QFont&);
+    bool FindText(QString& qTextToFind, uint32_t iOptionFlags);
+    void Print(QPrinter* pPrinter, bool all, int fromPage, int toPage);
+    uint32_t GetNbPages() { return m_iNbPages; }
 
-    public slots:
-        void goToTitle(const QModelIndex &);
-        void goToAnchor(const QUrl &qURL);
-    
-    public:
-      QRFCEditor *m_pTextEdit;     
-    private:
-      QTreeView *m_pTreeView;              
-      CTitleModel *m_pTitleModel; 
-      QString m_qFileName;
-      QString curFile;
-      bool isUntitled;
-      uint32_t m_iNbPages;
-      
-    };
+protected:
+    void closeEvent(QCloseEvent* event);
 
-    #endif
+private:
+    void setCurrentFile(const QString& fileName);
+    QString strippedName(const QString& fullFileName);
+    bool ParseRFCText(const QFile& qFile, QString& qOutput);
+
+public slots:
+    void goToTitle(const QModelIndex&);
+    void goToAnchor(const QUrl& qURL);
+
+public:
+    QRFCEditor* m_pTextEdit;
+
+private:
+    QTreeView* m_pTreeView;
+    CTitleModel* m_pTitleModel;
+    QString m_qFileName;
+    QString curFile;
+    bool isUntitled;
+    uint32_t m_iNbPages;
+};
+
+#endif

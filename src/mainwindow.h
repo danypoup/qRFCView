@@ -19,7 +19,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -39,23 +38,22 @@ class QProgressBar;
 class CDialogFind;
 class QTabWidget;
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
     MainWindow();
-    void SetCurrentDir(QDir qCurrentDir) {m_qLastOpenDir=qCurrentDir;}
-    
+    void SetCurrentDir(QDir qCurrentDir) { m_qLastOpenDir = qCurrentDir; }
+
 protected:
-    void closeEvent(QCloseEvent *event);   
-    
+    void closeEvent(QCloseEvent* event);
+
 public slots:
     void RFCLoad(uint32_t);
-    void RFCReady(const QString &qFileName);
-    
+    void RFCReady(const QString& qFileName);
+
 private slots:
-    void open();    
+    void open();
     void close();
     void getrfc();
     void copy();
@@ -67,15 +65,14 @@ private slots:
     void setDirectories();
     void updateMenus();
     void updateWindowMenu();
-    MdiChild *createMdiChild(const QString &qTitle);
-    
-    void RFCStart(const QString &qFilename);
+    MdiChild* createMdiChild(const QString& qTitle);
+
+    void RFCStart(const QString& qFilename);
     void updateRFCProgress(int bytesRead, int totalBytes);
     void forward();
     void backward();
     void print();
-    
-    
+
 private:
     void createActions();
     void createMenus();
@@ -83,22 +80,22 @@ private:
     void createStatusBar();
     void readSettings();
     void writeSettings();
-    MdiChild *activeMdiChild();
-    MdiChild *findMdiChild(const QString &fileName);
+    MdiChild* activeMdiChild();
+    MdiChild* findMdiChild(const QString& fileName);
 
-    QTabWidget *m_qTabWidget;
-    QSignalMapper *windowMapper;
+    QTabWidget* m_qTabWidget;
+    QSignalMapper* windowMapper;
 
-    QMenu *fileMenu;
-    QMenu *editMenu;
-    QMenu *windowMenu;
-    QMenu *helpMenu;
-    QToolBar *fileToolBar;
-    QToolBar *editToolBar;
-    QAction *openAct, *printAct, *closeAct, *loadAct;
-    QAction *exitAct;
-    QAction *copyAct;    
-    QAction *setFontAct, *setDirectoriesAct;
+    QMenu* fileMenu;
+    QMenu* editMenu;
+    QMenu* windowMenu;
+    QMenu* helpMenu;
+    QToolBar* fileToolBar;
+    QToolBar* editToolBar;
+    QAction* openAct, *printAct, *closeAct, *loadAct;
+    QAction* exitAct;
+    QAction* copyAct;
+    QAction* setFontAct, *setDirectoriesAct;
     /*
     QAction *closeAct;
     QAction *closeAllAct;
@@ -107,17 +104,17 @@ private:
     QAction *nextAct;
     QAction *previousAct;
     QAction *separatorAct;*/
-    QAction *aboutAct;
-    QAction *aboutQtAct;
-    QAction *backwardAct, *forwardAct;
-    QAction *findAct, *findnextAct, *findprevAct;
-    QProgressBar *m_pProgressBar; // Progress bar located in the status bar
+    QAction* aboutAct;
+    QAction* aboutQtAct;
+    QAction* backwardAct, *forwardAct;
+    QAction* findAct, *findnextAct, *findprevAct;
+    QProgressBar* m_pProgressBar; // Progress bar located in the status bar
     QFont m_qFont; // Font used for text display
     QStringList m_qDirectoryList;
     uint8_t m_iDefaultDirectory;
     QString m_qRFCURL;
-    QRFCLoader *m_pRFCLoader;
-    CDialogFind *m_pDialogFind;
+    QRFCLoader* m_pRFCLoader;
+    CDialogFind* m_pDialogFind;
     QDir m_qLastOpenDir;
 };
 

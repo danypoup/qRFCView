@@ -19,13 +19,12 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-
 #include <cprintdialog.h>
 
-CPrintDialog::CPrintDialog( QPrinter *p, QWidget *parent):QPrintDialog(p, parent)
+CPrintDialog::CPrintDialog(QPrinter* p, QWidget* parent)
+    : QPrintDialog(p, parent)
 {
-  setMinMax(1, 100);
-
+    setMinMax(1, 100);
 }
 
 CPrintDialog::~CPrintDialog()

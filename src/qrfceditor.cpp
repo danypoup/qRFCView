@@ -19,104 +19,95 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-
 #include <QtGui>
 #include "qrfceditor.h"
 
-QRFCEditor::QRFCEditor(QWidget *parent)
- : QTextBrowser(parent)
+QRFCEditor::QRFCEditor(QWidget* parent)
+    : QTextBrowser(parent)
 {
-  m_iCurrentPositionIdx=0;
+    m_iCurrentPositionIdx = 0;
 }
-
 
 QRFCEditor::~QRFCEditor()
 {
 }
 
-
-void QRFCEditor::setSource ( const QUrl & name ) 
-{   
-  QRegExp qRegExpRFC("rfc([\\d]+).txt");
-  
-  if (name.toString()[0]=='#')
-  {
-    //qDebug() << "setSource: " + name.toString().mid(1,-1);
-    scrollToAnchor2(name.toString().mid(1,-1) );  
-  }
-  else if ( qRegExpRFC.indexIn(name.toString())!=-1)
-  {
-    //qDebug() << "RFC " + qRegExpRFC.cap(1) + " is required";
-    emit RFCReq( qRegExpRFC.cap(1).toUInt() );
-  }
-}
-
-void QRFCEditor::scrollToAnchor2 ( const QString & name )
-{ 
-  // Record the link
-  //QTextCursor qTextCursor=textCursor();
-  QTextCursor qTextCursor=cursorForPosition(QPoint(0,0) );
-  qDebug() << qTextCursor.position() ;
-  while (m_iCurrentPositionIdx != m_qPositionPath.size() )
-    // Remove the end of the list
-    m_qPositionPath.removeLast();  
-  
-  // Save position at the end of the list
-  m_qPositionPath.append(qTextCursor.position() );
-  m_iCurrentPositionIdx++;
-  
-  QTextEdit::scrollToAnchor(name);
-  emit backwardAvailable(true);
-  emit forwardAvailable(false);
-}
-
-void QRFCEditor::backward ()
+void QRFCEditor::setSource(const QUrl& name)
 {
-  QTextCursor qTextCursor=cursorForPosition(QPoint(0,0) );
-  //uint32_t iPosition;
-  
-  if (m_iCurrentPositionIdx>0)
-  {
-    qDebug() << qTextCursor.position() ;
-    if ( m_iCurrentPositionIdx == m_qPositionPath.size() )
-      m_qPositionPath.append(qTextCursor.position() );
-    m_iCurrentPositionIdx--;
-    qTextCursor.movePosition( QTextCursor::End);
-    setTextCursor(qTextCursor);
-    qTextCursor.setPosition( m_qPositionPath[m_iCurrentPositionIdx] );    
-    setTextCursor(qTextCursor);
-    ensureCursorVisible ();
-    
-    if (m_iCurrentPositionIdx==0)
-      emit backwardAvailable(false);
-    emit forwardAvailable(true);  
-  }
+    QRegExp qRegExpRFC("rfc([\\d]+).txt");
 
+    if (name.toString()[0] == '#') {
+        //qDebug() << "setSource: " + name.toString().mid(1,-1);
+        scrollToAnchor2(name.toString().mid(1, -1));
+    } else if (qRegExpRFC.indexIn(name.toString()) != -1) {
+        //qDebug() << "RFC " + qRegExpRFC.cap(1) + " is required";
+        emit RFCReq(qRegExpRFC.cap(1).toUInt());
+    }
 }
 
-void QRFCEditor::forward ()
+void QRFCEditor::scrollToAnchor2(const QString& name)
 {
-  QTextCursor qTextCursor=textCursor();
-  if (m_iCurrentPositionIdx<m_qPositionPath.size()-1)
-  {
+    // Record the link
+    //QTextCursor qTextCursor=textCursor();
+    QTextCursor qTextCursor = cursorForPosition(QPoint(0, 0));
+    qDebug() << qTextCursor.position();
+    while (m_iCurrentPositionIdx != m_qPositionPath.size())
+        // Remove the end of the list
+        m_qPositionPath.removeLast();
+
+    // Save position at the end of the list
+    m_qPositionPath.append(qTextCursor.position());
     m_iCurrentPositionIdx++;
-    qTextCursor.movePosition( QTextCursor::End);
-    setTextCursor(qTextCursor);
-    qTextCursor.setPosition( m_qPositionPath[m_iCurrentPositionIdx] ); 
-    setTextCursor(qTextCursor);    
-    ensureCursorVisible ();
-    if (m_iCurrentPositionIdx==m_qPositionPath.size()-1)
-      emit forwardAvailable(false);  
+
+    QTextEdit::scrollToAnchor(name);
     emit backwardAvailable(true);
-  }  
+    emit forwardAvailable(false);
 }
 
-bool QRFCEditor::isBackwardAvailable ()
+void QRFCEditor::backward()
 {
-    return (m_iCurrentPositionIdx>0);
+    QTextCursor qTextCursor = cursorForPosition(QPoint(0, 0));
+    //uint32_t iPosition;
+
+    if (m_iCurrentPositionIdx > 0) {
+        qDebug() << qTextCursor.position();
+        if (m_iCurrentPositionIdx == m_qPositionPath.size())
+            m_qPositionPath.append(qTextCursor.position());
+        m_iCurrentPositionIdx--;
+        qTextCursor.movePosition(QTextCursor::End);
+        setTextCursor(qTextCursor);
+        qTextCursor.setPosition(m_qPositionPath[m_iCurrentPositionIdx]);
+        setTextCursor(qTextCursor);
+        ensureCursorVisible();
+
+        if (m_iCurrentPositionIdx == 0)
+            emit backwardAvailable(false);
+        emit forwardAvailable(true);
+    }
 }
 
-bool QRFCEditor::isForwardAvailable ()
+void QRFCEditor::forward()
 {
-  return (m_iCurrentPositionIdx<m_qPositionPath.size()-1);
+    QTextCursor qTextCursor = textCursor();
+    if (m_iCurrentPositionIdx < m_qPositionPath.size() - 1) {
+        m_iCurrentPositionIdx++;
+        qTextCursor.movePosition(QTextCursor::End);
+        setTextCursor(qTextCursor);
+        qTextCursor.setPosition(m_qPositionPath[m_iCurrentPositionIdx]);
+        setTextCursor(qTextCursor);
+        ensureCursorVisible();
+        if (m_iCurrentPositionIdx == m_qPositionPath.size() - 1)
+            emit forwardAvailable(false);
+        emit backwardAvailable(true);
+    }
+}
+
+bool QRFCEditor::isBackwardAvailable()
+{
+    return (m_iCurrentPositionIdx > 0);
+}
+
+bool QRFCEditor::isForwardAvailable()
+{
+    return (m_iCurrentPositionIdx < m_qPositionPath.size() - 1);
 }

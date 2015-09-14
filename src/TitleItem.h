@@ -19,34 +19,32 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-
 #ifndef TITLEITEM_H
 #define TITLEITEM_H
 
 #include <QList>
 #include <QVariant>
 
-class CTitleItem
-{
+class CTitleItem {
 public:
-    CTitleItem(const QString &,const QString &, CTitleItem *parent=0);
+    CTitleItem(const QString&, const QString&, CTitleItem* parent = 0);
     ~CTitleItem();
 
-    void appendChild(CTitleItem *child);
+    void appendChild(CTitleItem* child);
 
-    CTitleItem *child(int row);
+    CTitleItem* child(int row);
     int childCount() const;
-    int columnCount() const {return 1;}
-    QString GetTitle() {return m_qTitle;}
-    
+    int columnCount() const { return 1; }
+    QString GetTitle() { return m_qTitle; }
+
     int row() const;
-    CTitleItem *parent();
-    QString GetAnchor() {return m_qAnchor;}
-    
+    CTitleItem* parent();
+    QString GetAnchor() { return m_qAnchor; }
+
 private:
     QList<CTitleItem*> childItems;
     QString m_qTitle;
-    CTitleItem *parentItem;
+    CTitleItem* parentItem;
     QString m_qAnchor;
 };
 
