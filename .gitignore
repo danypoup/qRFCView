@@ -1,0 +1,12 @@
+# project local setting files
+CMakeLists.txt.user
+
+/*.pro.user
+
+/*.kdev4
+/.kdev4/
+
+
+# project build folders
+/build_*
+
