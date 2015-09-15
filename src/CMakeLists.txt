@@ -50,13 +50,6 @@ if(WIN32)
     list(APPEND RESOURCES src.rc)
 endif()
 
-# Qt4 stuff
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-find_package(Qt4 4.8.6 REQUIRED QtGui QtNetwork)
-
 add_executable(qRFCView
     ${HEADERS}
     ${SOURCES}

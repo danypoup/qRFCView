@@ -21,4 +21,30 @@
 project(qRFCView CXX)
 cmake_minimum_required(VERSION 3.0.2)
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake/Common/Includes/")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake/Common/Modules/")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake/Includes/")
+
+message(STATUS "Using cmake v${CMAKE_VERSION}")
+message(STATUS "Started on ${CMAKE_SYSTEM_NAME} (${CMAKE_SYSTEM_VERSION})")
+message(STATUS "Configuring '${PROJECT_NAME}' v${PROJECT_VERSION} project")
+
+# Enable info gathering for final summary
+include(FeatureSummary)
+
+# Check compiler supported features.
+include(ProjectCompilerFlags)
+# Various project user friendly configuration settings and options.
+include(ProjectSetup)
+# Look for and setup dependencies like 3rd party libraries etc.
+include(ProjectDependencies)
+
+# Local project settings
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+
 add_subdirectory(src)
+
+
+# Generate summary of required/optional/runtime packages, enabled/disabled features.
+include(ProjectSummary)
