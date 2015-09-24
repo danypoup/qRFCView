@@ -1,4 +1,4 @@
-IDR_MAINFRAME           ICON    DISCARDABLE     "..\\images\\rfcview.ico"
+IDR_MAINFRAME           ICON    DISCARDABLE     "../images/rfcview.ico"
 
  1 VERSIONINFO
  FILEVERSION 1, 0, 0, 0
