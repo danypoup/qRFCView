@@ -19,7 +19,7 @@
 
 
 project(qRFCView CXX)
-cmake_minimum_required(VERSION 3.0.2)
+cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake/Common/Includes/")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake/Common/Modules/")
