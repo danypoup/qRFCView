@@ -43,9 +43,9 @@ set_package_properties(Qt4 PROPERTIES
     URL "http://qt-project.org/"
 )
 
-include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(Qt4
-    DEFAULT_MSG
-    Qt4Widgets_VERSION_STRING
-)
+#include(FindPackageHandleStandardArgs)
+#find_package_handle_standard_args(Qt4
+#    DEFAULT_MSG
+#    Qt4_FOUND
+#)
 
