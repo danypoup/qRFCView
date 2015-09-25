@@ -10,3 +10,5 @@ CMakeLists.txt.user
 # project build folders
 /build_*
 
+# editor temporary files
+*.sw[po]
