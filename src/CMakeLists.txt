@@ -56,7 +56,16 @@ add_executable(qRFCView
     ${RESOURCES}
 )
 
-target_link_libraries(qRFCView
-    Qt4::QtGui
-    Qt4::QtNetwork
-)
+if(Qt5_FOUND)
+    target_link_libraries(qRFCView
+        Qt5::Core
+        Qt5::Widgets
+        Qt5::Gui
+        Qt5::Network
+    )
+else()
+    target_link_libraries(qRFCView
+        Qt4::QtGui
+        Qt4::QtNetwork
+    )
+endif()
