@@ -19,7 +19,7 @@
 
 
 # just to show heders in some IDE's; otherwice redundant
-set(HEADERS
+set(${PROJECT_NAME}_HEADERS
     mainwindow.h
     mdichild.h
     TitleModel.h
@@ -31,7 +31,7 @@ set(HEADERS
     cprintdialog.h
 )
 
-set(SOURCES
+set(${PROJECT_NAME}_SOURCES
     rfcview.cpp
     mainwindow.cpp
     mdichild.cpp
@@ -45,23 +45,23 @@ set(SOURCES
 )
 
 # just to show heders in some IDE's; otherwice redundant
-set(FORMS
+set(${PROJECT_NAME}_FORMS
     find_dlg.ui
     setdirectory_dlg.ui
 )
 
-set(RESOURCES
+set(${PROJECT_NAME}_RESOURCES
     rfcview.qrc
 )
 if(WIN32)
-    list(APPEND RESOURCES src.rc)
+    list(APPEND ${PROJECT_NAME}_RESOURCES src.rc)
 endif()
 
 add_executable(${PROJECT_NAME}
-    ${HEADERS}
-    ${SOURCES}
-    ${FORMS}
-    ${RESOURCES}
+    ${${PROJECT_NAME}_HEADERS}
+    ${${PROJECT_NAME}_SOURCES}
+    ${${PROJECT_NAME}_FORMS}
+    ${${PROJECT_NAME}_RESOURCES}
 )
 
 target_link_libraries(${PROJECT_NAME}
