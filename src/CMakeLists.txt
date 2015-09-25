@@ -62,6 +62,7 @@ if(Qt5_FOUND)
         Qt5::Widgets
         Qt5::Gui
         Qt5::Network
+        Qt5::PrintSupport
     )
 else()
     target_link_libraries(qRFCView

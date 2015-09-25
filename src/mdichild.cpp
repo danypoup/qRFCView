@@ -22,6 +22,9 @@
 #include <QtGui>
 #include <QPainter>
 #include <QFontMetrics>
+#include <QTreeView>
+#include <QMessageBox>
+#include <QPrinter>
 
 #include "mdichild.h"
 #include "TitleModel.h"
