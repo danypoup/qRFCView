@@ -50,13 +50,13 @@ if(WIN32)
     list(APPEND RESOURCES src.rc)
 endif()
 
-add_executable(qRFCView
+add_executable(${PROJECT_NAME}
     ${HEADERS}
     ${SOURCES}
     ${RESOURCES}
 )
 
-target_link_libraries(qRFCView
+target_link_libraries(${PROJECT_NAME}
     Qt4::QtGui
     Qt4::QtNetwork
 )
