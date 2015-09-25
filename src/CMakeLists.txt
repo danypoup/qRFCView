@@ -43,6 +43,13 @@ set(SOURCES
     cdialogfind.cpp
     cprintdialog.cpp
 )
+
+# just to show heders in some IDE's; otherwice redundant
+set(FORMS
+    find_dlg.ui
+    setdirectory_dlg.ui
+)
+
 set(RESOURCES
     rfcview.qrc
 )
@@ -53,6 +60,7 @@ endif()
 add_executable(${PROJECT_NAME}
     ${HEADERS}
     ${SOURCES}
+    ${FORMS}
     ${RESOURCES}
 )
 
