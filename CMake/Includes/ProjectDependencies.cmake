@@ -44,6 +44,7 @@ endif()
 
 # Find the Qt libraries
 if(Qt5Core_FOUND)
+    unset(QT_QMAKE_EXECUTABLE CACHE)
     set(PKG_NAME Qt5)
     set(PKG_VERSION 5.5)
     set(PKG_MODULE_LIST Core Widgets Gui Network PrintSupport)
