@@ -54,7 +54,9 @@ set(${PROJECT_NAME}_RESOURCES
     rfcview.qrc
 )
 if(WIN32)
-    list(APPEND ${PROJECT_NAME}_RESOURCES src.rc)
+    list(APPEND ${PROJECT_NAME}_RESOURCES
+        rfcview.rc
+    )
 endif()
 
 add_executable(${PROJECT_NAME}
