@@ -20,28 +20,28 @@
 
 # just to show heders in some IDE's; otherwice redundant
 set(${PROJECT_NAME}_HEADERS
+    TitleItem.h
+    TitleModel.h
+    cdialogfind.h
+    cdialogsetdirectory.h
+    cprintdialog.h
     mainwindow.h
     mdichild.h
-    TitleModel.h
-    TitleItem.h
     qrfceditor.h
-    cdialogsetdirectory.h
     rfcloader.h
-    cdialogfind.h
-    cprintdialog.h
 )
 
 set(${PROJECT_NAME}_SOURCES
-    rfcview.cpp
+    TitleItem.cpp
+    TitleModel.cpp
+    cdialogfind.cpp
+    cdialogsetdirectory.cpp
+    cprintdialog.cpp
     mainwindow.cpp
     mdichild.cpp
-    TitleModel.cpp
-    TitleItem.cpp
     qrfceditor.cpp
-    cdialogsetdirectory.cpp
     rfcloader.cpp
-    cdialogfind.cpp
-    cprintdialog.cpp
+    rfcview.cpp
 )
 
 # just to show heders in some IDE's; otherwice redundant
