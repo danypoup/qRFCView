@@ -34,14 +34,32 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
+set(OPT_ENFORCE_QT4_TXT "force Qt4-build (don't look for preferred Qt5)")
+option(OPT_ENFORCE_QT4 ${OPT_ENFORCE_QT4_TXT} ON)
+add_feature_info(OPT_ENFORCE_QT4 OPT_ENFORCE_QT4 ${OPT_ENFORCE_QT4_TXT})
+
+if(NOT OPT_ENFORCE_QT4)
+    find_package(Qt5Core QUIET)
+endif()
 
 # Find the Qt libraries
-find_package(Qt4 4.8.6 REQUIRED QtGui QtNetwork)
-set_package_properties(Qt4 PROPERTIES
+if(Qt5Core_FOUND)
+    unset(QT_QMAKE_EXECUTABLE CACHE)
+    set(PKG_NAME Qt5)
+    set(PKG_VERSION 5.5)
+    set(PKG_MODULE_LIST Core Widgets Gui Network PrintSupport)
+else()
+    set(PKG_NAME Qt4)
+    set(PKG_VERSION 4.6.6)
+    set(PKG_MODULE_LIST QtGui QtNetwork)
+endif()
+find_package(${PKG_NAME} ${PKG_VERSION} REQUIRED COMPONENTS ${PKG_MODULE_LIST})
+set_package_properties(${PKG_NAME} PROPERTIES
     TYPE REQUIRED
     DESCRIPTION "cross-platform application framework"
     URL "http://qt-project.org/"
 )
+
 
 #include(FindPackageHandleStandardArgs)
 #find_package_handle_standard_args(Qt4

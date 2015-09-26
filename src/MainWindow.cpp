@@ -33,9 +33,15 @@
 
 #include <QtGui>
 #include <QFontDialog>
-#include <QHttp>
 #include <QPrinter>
 #include <QLibrary>
+#include <QStatusBar>
+#include <QFileDialog>
+#include <QInputDialog>
+#include <QMessageBox>
+#include <QMenuBar>
+#include <QToolBar>
+#include <QProgressBar>
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
@@ -128,7 +134,7 @@ void MainWindow::getRfc()
 {
     // Load a RFC number
     bool bOK;
-    int iRFCNum = QInputDialog::getInteger(this, tr("Please enter a RFC number"),
+    int iRFCNum = QInputDialog::getInt(this, tr("Please enter a RFC number"),
                                            tr("RFC#:"), 0, 1, 99999, 1, &bOK);
     if (bOK)
         RFCLoad(iRFCNum);
@@ -343,7 +349,7 @@ void MainWindow::createStatusBar()
     m_pProgressBar = new QProgressBar();
     m_pProgressBar->setRange(0, 100);
     m_pProgressBar->setValue(50);
-    connect(m_pRFCLoader->GetQHttp(), SIGNAL(dataReadProgress(int, int)), this, SLOT(updateRFCProgress(int, int)));
+    //TODO Qt5: connect(m_pRFCLoader->GetQHttp(), SIGNAL(dataReadProgress(int, int)), this, SLOT(updateRFCProgress(int, int)));
     statusBar()->showMessage(tr("Ready"));
     //statusBar()->addWidget(m_pProgressBar, 0);
     //qProgressBar.show();

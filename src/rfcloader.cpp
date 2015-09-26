@@ -19,7 +19,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include <QHttp>
+//Qt5 out: #include <QHttp>
 #include <QUrl>
 #include <QFile>
 #include "rfcloader.h"
@@ -30,6 +30,7 @@
 QRFCLoader::QRFCLoader(QObject* parent)
     : QObject(parent)
 {
+    /*
     m_qHttp = new QHttp(this);
     connect(m_qHttp, SIGNAL(requestStarted(int)), this, SLOT(startDownload(int)));
     connect(m_qHttp, SIGNAL(requestFinished(int, bool)), this, SLOT(fileDownload(int, bool)));
@@ -38,15 +39,17 @@ QRFCLoader::QRFCLoader(QObject* parent)
     m_iDefaultDir = 0;
     m_qIETFSite = "www.ietf.org";
     m_iCurrentRequestID = -1;
+    */
 }
 
 QRFCLoader::~QRFCLoader()
 {
-    delete m_qHttp;
+    //delete m_qHttp;
 }
 
 void QRFCLoader::SetDirectories(QStringList& qDirList, uint8_t iDefaultDir)
 {
+    /*
     int i;
     QDir qDirectory;
 
@@ -68,16 +71,20 @@ void QRFCLoader::SetDirectories(QStringList& qDirList, uint8_t iDefaultDir)
     }
 
     //m_iDefaultDir=iDefaultDir;
+    */
 }
 
 void QRFCLoader::SetDownloadURL(QUrl& qURL)
 {
+    /*
     m_qIETFSite = qURL.host();
     m_qIETFPath = qURL.path();
+    */
 }
 
 void QRFCLoader::GetFile(uint32_t iRFCNum)
 {
+    /*
     uint8_t i;
     QString qFilename;
     int iRequestID;
@@ -113,19 +120,23 @@ void QRFCLoader::GetFile(uint32_t iRFCNum)
     iRequestID = m_qHttp->get(qUrl, sRFCDesc.pFile);
     m_RequestList.insert(iRequestID, sRFCDesc);
     m_iCurrentRequestID = -1;
+    */
 }
 
 void QRFCLoader::startDownload(int iRequestID)
 {
+    /*
     //qDebug() << "startDownload="+QString::number(iRequestID);
     if (m_RequestList.contains(iRequestID))
         m_iCurrentRequestID = iRequestID;
     else
         m_iCurrentRequestID = -1;
+    */
 }
 
 void QRFCLoader::receivedHeader(const QHttpResponseHeader& qResponseHdr)
 {
+    /*
     RFCDesc_t sRFCDesc;
     QString qFilename;
     //qDebug() << "HTTP status=" + QString::number(qResponseHdr.statusCode())+","+QString::number(m_iCurrentRequestID);
@@ -142,10 +153,12 @@ void QRFCLoader::receivedHeader(const QHttpResponseHeader& qResponseHdr)
         qFilename = m_qDirList.at(m_iDefaultDir) + "/rfc" + QString::number(sRFCDesc.iRFCNum) + ".txt";
         emit start(qFilename);
     }
+    */
 }
 
 void QRFCLoader::fileDownload(int iRequestID, bool bError)
 {
+    /*
     QString qFilename;
     RFCDesc_t sRFCDesc;
     //qDebug() << "fileDownload="+QString::number(iRequestID)+","+QString::number(m_iCurrentRequestID);
@@ -169,4 +182,5 @@ void QRFCLoader::fileDownload(int iRequestID, bool bError)
             sRFCDesc.pFile->remove();
         }
     }
+    */
 }

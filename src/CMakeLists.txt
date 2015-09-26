@@ -67,7 +67,17 @@ add_executable(${PROJECT_NAME}
     ${${PROJECT_NAME}_RESOURCES}
 )
 
-target_link_libraries(${PROJECT_NAME}
-    Qt4::QtGui
-    Qt4::QtNetwork
-)
+if(Qt5_FOUND)
+    target_link_libraries(${PROJECT_NAME}
+        Qt5::Core
+        Qt5::Widgets
+        Qt5::Gui
+        Qt5::Network
+        Qt5::PrintSupport
+    )
+else()
+    target_link_libraries(${PROJECT_NAME}
+        Qt4::QtGui
+        Qt4::QtNetwork
+    )
+endif()
