@@ -22,92 +22,77 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QStringList>
 #include <QMainWindow>
+
+#include <QStringList>
 #include <QDir>
 
 #include <stdint.h>
 
-class QAction;
-class QMenu;
-class QWorkspace;
+namespace Ui {
+class MainWindow;
+}
+//class QWorkspace;
 class MdiChild;
-class QSignalMapper;
+//class QSignalMapper;
 class QRFCLoader;
 class QProgressBar;
 class CDialogFind;
-class QTabWidget;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    MainWindow();
+    explicit MainWindow(QWidget* parent = 0);
+    ~MainWindow();
+
     void SetCurrentDir(QDir qCurrentDir) { m_qLastOpenDir = qCurrentDir; }
 
-protected:
-    void closeEvent(QCloseEvent* event);
-
 public slots:
-    void RFCLoad(uint32_t);
     void RFCReady(const QString& qFileName);
 
+protected:
+    void changeEvent(QEvent* e);
+    void closeEvent(QCloseEvent* event);
+
 private slots:
-    void open();
-    void close();
-    void getrfc();
+    void openRfc();
+    void getRfc();
+    void closeRfc();
+    void print();
+
+    void forward();
+    void backward();
     void copy();
-    void findOpen();
-    void findnext();
-    void findprev();
-    void about();
+    void find();
+    void findPrevious();
+    void findNext();
     void setFont();
     void setDirectories();
+
+    void about();
+    void aboutQt();
+
     void updateMenus();
-    void updateWindowMenu();
-    MdiChild* createMdiChild(const QString& qTitle);
+
+    void RFCLoad(uint32_t);
+    //void RFCReady(const QString& qFileName);
 
     void RFCStart(const QString& qFilename);
     void updateRFCProgress(int bytesRead, int totalBytes);
-    void forward();
-    void backward();
-    void print();
+
+    MdiChild* createMdiChild(const QString& qTitle);
 
 private:
-    void createActions();
-    void createMenus();
-    void createToolBars();
-    void createStatusBar();
     void readSettings();
     void writeSettings();
+    void createStatusBar();
+
     MdiChild* activeMdiChild();
     MdiChild* findMdiChild(const QString& fileName);
 
-    QTabWidget* m_qTabWidget;
-    QSignalMapper* windowMapper;
+    Ui::MainWindow* ui;
 
-    QMenu* fileMenu;
-    QMenu* editMenu;
-    QMenu* windowMenu;
-    QMenu* helpMenu;
-    QToolBar* fileToolBar;
-    QToolBar* editToolBar;
-    QAction* openAct, *printAct, *closeAct, *loadAct;
-    QAction* exitAct;
-    QAction* copyAct;
-    QAction* setFontAct, *setDirectoriesAct;
-    /*
-    QAction *closeAct;
-    QAction *closeAllAct;
-    QAction *tileAct;
-    QAction *cascadeAct;
-    QAction *nextAct;
-    QAction *previousAct;
-    QAction *separatorAct;*/
-    QAction* aboutAct;
-    QAction* aboutQtAct;
-    QAction* backwardAct, *forwardAct;
-    QAction* findAct, *findnextAct, *findprevAct;
     QProgressBar* m_pProgressBar; // Progress bar located in the status bar
     QFont m_qFont; // Font used for text display
     QStringList m_qDirectoryList;
@@ -118,4 +103,26 @@ private:
     QDir m_qLastOpenDir;
 };
 
-#endif
+/* OLD impl.
+class MainWindow : public QMainWindow {
+    Q_OBJECT
+
+public:
+
+private slots:
+    //void updateWindowMenu();
+
+private:
+    //QSignalMapper* windowMapper;
+
+    / *
+    QAction *closeAct;
+    QAction *closeAllAct;
+    QAction *tileAct;
+    QAction *cascadeAct;
+    QAction *nextAct;
+    QAction *previousAct;
+    QAction *separatorAct;* /
+};
+*/
+#endif // MAINWINDOW_H

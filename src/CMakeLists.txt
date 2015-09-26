@@ -20,24 +20,24 @@
 
 # just to show heders in some IDE's; otherwice redundant
 set(${PROJECT_NAME}_HEADERS
+    MainWindow.h
     TitleItem.h
     TitleModel.h
     cdialogfind.h
     cdialogsetdirectory.h
     cprintdialog.h
-    mainwindow.h
     mdichild.h
     qrfceditor.h
     rfcloader.h
 )
 
 set(${PROJECT_NAME}_SOURCES
+    MainWindow.cpp
     TitleItem.cpp
     TitleModel.cpp
     cdialogfind.cpp
     cdialogsetdirectory.cpp
     cprintdialog.cpp
-    mainwindow.cpp
     mdichild.cpp
     qrfceditor.cpp
     rfcloader.cpp
@@ -46,6 +46,7 @@ set(${PROJECT_NAME}_SOURCES
 
 # just to show heders in some IDE's; otherwice redundant
 set(${PROJECT_NAME}_FORMS
+    MainWindow.ui
     find_dlg.ui
     setdirectory_dlg.ui
 )
