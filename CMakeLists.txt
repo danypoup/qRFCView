@@ -44,6 +44,9 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 
 add_subdirectory(src)
+if(DOXYGEN_FOUND)
+    add_subdirectory(Documentation)
+endif()
 
 
 # Generate summary of required/optional/runtime packages, enabled/disabled features.

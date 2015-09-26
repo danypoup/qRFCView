@@ -67,3 +67,18 @@ set_package_properties(${PKG_NAME} PROPERTIES
 #    Qt4_FOUND
 #)
 
+
+# -------------------------------------------------------------------------------------------------
+# Doxygen tool
+# -------------------------------------------------------------------------------------------------
+find_package(Doxygen 1.8.9)
+set_package_properties(Doxygen PROPERTIES
+    TYPE OPTIONAL
+    DESCRIPTION "documentation generator, a tool for writing software reference documentation"
+    URL "http://www.doxygen.org"
+)
+if(DOXYGEN_FOUND)
+    message(STATUS "Reference manual can be created by using the 'doc' target")
+else()
+    message(WARNING "Doxygen not found - Reference manual will not be created")
+endif()
