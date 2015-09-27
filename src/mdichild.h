@@ -32,7 +32,7 @@
 #define PARSER_TRAILER 3
 
 class QTreeView;
-class QRFCEditor;
+class RfcView;
 class CTitleModel;
 class QModelIndex;
 class QFile;
@@ -68,7 +68,7 @@ public slots:
     void goToAnchor(const QUrl& qURL);
 
 public:
-    QRFCEditor* m_pTextEdit;
+    RfcView* m_pTextEdit;
 
 private:
     QTreeView* m_pTreeView;

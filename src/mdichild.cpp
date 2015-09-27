@@ -29,14 +29,14 @@
 #include "mdichild.h"
 #include "TitleModel.h"
 #include "TitleItem.h"
-#include "qrfceditor.h"
+#include "RfcView.h"
 #include "cdialogfind.h"
 
 MdiChild::MdiChild(QWidget* pParent)
     : QSplitter(pParent)
 {
     m_pTreeView = new QTreeView;
-    m_pTextEdit = new QRFCEditor;
+    m_pTextEdit = new RfcView;
     m_pTitleModel = NULL;
     m_iNbPages = 0;
     addWidget(m_pTreeView);

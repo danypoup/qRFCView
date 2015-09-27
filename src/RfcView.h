@@ -19,8 +19,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef QRFCEDITOR_H
-#define QRFCEDITOR_H
+#ifndef RFCVIEW_H
+#define RFCVIEW_H
 
 #include <qtextbrowser.h>
 class QStringList;
@@ -30,12 +30,12 @@ class QStringList;
 /**
 @author Romain Rollet
 */
-class QRFCEditor : public QTextBrowser {
+class RfcView : public QTextBrowser {
     Q_OBJECT
 public:
-    QRFCEditor(QWidget* parent = 0);
+    RfcView(QWidget* parent = 0);
 
-    ~QRFCEditor();
+    ~RfcView();
 
     void setSource(const QUrl& name);
     void scrollToAnchor2(const QString& name);

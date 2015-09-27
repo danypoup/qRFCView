@@ -20,19 +20,19 @@
  */
 
 #include <QtGui>
-#include "qrfceditor.h"
+#include "RfcView.h"
 
-QRFCEditor::QRFCEditor(QWidget* parent)
+RfcView::RfcView(QWidget* parent)
     : QTextBrowser(parent)
 {
     m_iCurrentPositionIdx = 0;
 }
 
-QRFCEditor::~QRFCEditor()
+RfcView::~RfcView()
 {
 }
 
-void QRFCEditor::setSource(const QUrl& name)
+void RfcView::setSource(const QUrl& name)
 {
     QRegExp qRegExpRFC("rfc([\\d]+).txt");
 
@@ -45,7 +45,7 @@ void QRFCEditor::setSource(const QUrl& name)
     }
 }
 
-void QRFCEditor::scrollToAnchor2(const QString& name)
+void RfcView::scrollToAnchor2(const QString& name)
 {
     // Record the link
     //QTextCursor qTextCursor=textCursor();
@@ -64,7 +64,7 @@ void QRFCEditor::scrollToAnchor2(const QString& name)
     emit forwardAvailable(false);
 }
 
-void QRFCEditor::backward()
+void RfcView::backward()
 {
     QTextCursor qTextCursor = cursorForPosition(QPoint(0, 0));
     //uint32_t iPosition;
@@ -86,7 +86,7 @@ void QRFCEditor::backward()
     }
 }
 
-void QRFCEditor::forward()
+void RfcView::forward()
 {
     QTextCursor qTextCursor = textCursor();
     if (m_iCurrentPositionIdx < m_qPositionPath.size() - 1) {
@@ -102,12 +102,12 @@ void QRFCEditor::forward()
     }
 }
 
-bool QRFCEditor::isBackwardAvailable()
+bool RfcView::isBackwardAvailable()
 {
     return (m_iCurrentPositionIdx > 0);
 }
 
-bool QRFCEditor::isForwardAvailable()
+bool RfcView::isForwardAvailable()
 {
     return (m_iCurrentPositionIdx < m_qPositionPath.size() - 1);
 }

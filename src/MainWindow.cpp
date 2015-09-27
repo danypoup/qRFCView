@@ -26,7 +26,7 @@
 #include "mdichild.h"
 #include "cdialogsetdirectory.h"
 #include "cdialogfind.h"
-#include "qrfceditor.h"
+#include "RfcView.h"
 
 #include <QMessageBox>
 
