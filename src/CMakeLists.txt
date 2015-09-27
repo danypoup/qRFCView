@@ -37,9 +37,9 @@ set(${PROJECT_NAME}_SOURCES
     TitleModel.cpp
     cdialogfind.cpp
     cdialogsetdirectory.cpp
+    main.cpp
     mdichild.cpp
     rfcloader.cpp
-    rfcview.cpp
 )
 
 # just to show heders in some IDE's; otherwice redundant
