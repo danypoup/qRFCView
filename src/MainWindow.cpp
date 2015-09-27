@@ -155,7 +155,7 @@ void MainWindow::print()
 {
     MdiChild* pMdiChild = activeMdiChild();
     if (pMdiChild) {
-        QPrinter printer(QPrinter::PrinterResolution);
+        QPrinter printer(QPrinter::HighResolution);
 
         printer.setFullPage(true);
         printer.setNumCopies(2);
