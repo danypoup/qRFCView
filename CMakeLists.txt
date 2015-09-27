@@ -36,6 +36,8 @@ include(FeatureSummary)
 include(ProjectCompilerFlags)
 # Various project user friendly configuration settings and options.
 include(ProjectSetup)
+# Check VCS-id of root project
+include(ProjectVCS-id)
 # Look for and setup dependencies like 3rd party libraries etc.
 include(ProjectDependencies)
 
