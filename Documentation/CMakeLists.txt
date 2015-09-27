@@ -1,5 +1,5 @@
 #
-# qRFCView, A smart IETF RFC viewer based on the Qt4 library.
+# qRFCView, A smart IETF RFC viewer based on the Qt library.
 # Copyright (C) 2015 Ľubomír Carik <Lubomir.Carik@gmail.com>
 #
 # This program is free software; you can redistribute it and/or modify

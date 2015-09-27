@@ -14,7 +14,7 @@
 
 *More details coming soon...*
 
-**qRFCView** is a smart IETF RFC viewer based on the Qt4 library.
+**qRFCView** is a smart IETF RFC viewer based on the Qt library.
 
 Advantages:
 

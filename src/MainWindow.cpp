@@ -1,5 +1,5 @@
 /*
- * qRFCView, A smart IETF RFC viewer based on the Qt4 library.
+ * qRFCView, A smart IETF RFC viewer based on the Qt library.
  * Copyright (C) 2005 Mitsubishi Electric ITE-TCL,
  *                    R. Rollet (rollet@tcl.ite.mee.com)
  * Copyright (C) 2015 Ľubomír Carik <Lubomir.Carik@gmail.com>
@@ -135,7 +135,7 @@ void MainWindow::getRfc()
     // Load a RFC number
     bool bOK;
     int iRFCNum = QInputDialog::getInt(this, tr("Please enter a RFC number"),
-                                           tr("RFC#:"), 0, 1, 99999, 1, &bOK);
+                                       tr("RFC#:"), 0, 1, 99999, 1, &bOK);
     if (bOK)
         RFCLoad(iRFCNum);
 }
@@ -266,7 +266,7 @@ void MainWindow::setDirectories()
 void MainWindow::about()
 {
     QMessageBox::about(this, tr("About qRFCView"),
-                       tr("<b>qRFCView v0.63</b><br /> A smart RFC Viewer using the Qt4 library.<br><br> Mitsubishi Electric, 2005<br /><br /><a href=\"http://qrfcview.berlios.de/\">http://qrfcview.berlios.de/</a><br /><br /><small>Small Bugfix by Josef Freundorfer <a href=\"http://www.freundorfer.info\">http://www.freundorfer.info</a></small>"));
+                       tr("<b>qRFCView v0.63</b><br /> A smart RFC Viewer using the Qt library.<br><br> Mitsubishi Electric, 2005<br /><br /><a href=\"http://qrfcview.berlios.de/\">http://qrfcview.berlios.de/</a><br /><br /><small>Small Bugfix by Josef Freundorfer <a href=\"http://www.freundorfer.info\">http://www.freundorfer.info</a></small>"));
 }
 
 void MainWindow::aboutQt()
