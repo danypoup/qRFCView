@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>qRFCView</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="rfcview.qrc">
+    <normaloff>:/images/rfcview.png</normaloff>:/images/rfcview.png</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>

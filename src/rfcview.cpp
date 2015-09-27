@@ -30,7 +30,6 @@ int main(int argc, char* argv[])
 {
     Q_INIT_RESOURCE(rfcview);
     QApplication app(argc, argv);
-    app.setWindowIcon(QIcon(":/images/rfcview.png"));
 
     MainWindow mainWin;
     mainWin.show();
