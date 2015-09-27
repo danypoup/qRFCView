@@ -27,7 +27,6 @@
 #include "cdialogsetdirectory.h"
 #include "cdialogfind.h"
 #include "qrfceditor.h"
-#include "cprintdialog.h"
 
 #include <QMessageBox>
 
@@ -42,6 +41,7 @@
 #include <QMenuBar>
 #include <QToolBar>
 #include <QProgressBar>
+#include <QPrintDialog>
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)

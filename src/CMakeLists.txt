@@ -25,7 +25,6 @@ set(${PROJECT_NAME}_HEADERS
     TitleModel.h
     cdialogfind.h
     cdialogsetdirectory.h
-    cprintdialog.h
     mdichild.h
     qrfceditor.h
     rfcloader.h
@@ -37,7 +36,6 @@ set(${PROJECT_NAME}_SOURCES
     TitleModel.cpp
     cdialogfind.cpp
     cdialogsetdirectory.cpp
-    cprintdialog.cpp
     mdichild.cpp
     qrfceditor.cpp
     rfcloader.cpp
