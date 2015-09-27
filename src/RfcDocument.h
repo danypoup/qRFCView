@@ -19,10 +19,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef MDICHILD_H
-#define MDICHILD_H
-
-#include <QSplitter>
+#ifndef RFCDOCUMENT_H
+#define RFCDOCUMENT_H
 
 #include <stdint.h>
 
@@ -31,6 +29,7 @@
 #define PARSER_HEADER 2
 #define PARSER_TRAILER 3
 
+#include <QWidget>
 class QTreeView;
 class RfcView;
 class CTitleModel;
@@ -39,12 +38,18 @@ class QFile;
 class QUrl;
 class QPrinter;
 
-class MdiChild : public QSplitter {
+
+namespace Ui {
+class RfcDocument;
+}
+
+class RfcDocument : public QWidget {
     Q_OBJECT
 
 public:
-    MdiChild(QWidget* pParent = 0);
-    ~MdiChild();
+    explicit RfcDocument(QWidget* parent = 0);
+    ~RfcDocument();
+
     bool loadFile(const QString& fileName);
     QString userFriendlyCurrentFile();
     QString currentFile() { return curFile; }
@@ -55,7 +60,14 @@ public:
     void Print(QPrinter* pPrinter, bool all, int fromPage, int toPage);
     uint32_t GetNbPages() { return m_iNbPages; }
 
+    RfcView* m_pTextEdit;
+
+public slots:
+    void goToTitle(const QModelIndex&);
+    void goToAnchor(const QUrl& qURL);
+
 protected:
+    void changeEvent(QEvent* e);
     void closeEvent(QCloseEvent* event);
 
 private:
@@ -63,14 +75,8 @@ private:
     QString strippedName(const QString& fullFileName);
     bool ParseRFCText(const QFile& qFile, QString& qOutput);
 
-public slots:
-    void goToTitle(const QModelIndex&);
-    void goToAnchor(const QUrl& qURL);
+    Ui::RfcDocument* ui;
 
-public:
-    RfcView* m_pTextEdit;
-
-private:
     QTreeView* m_pTreeView;
     CTitleModel* m_pTitleModel;
     QString m_qFileName;
@@ -79,4 +85,4 @@ private:
     uint32_t m_iNbPages;
 };
 
-#endif
+#endif // RFCDOCUMENT_H

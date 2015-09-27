@@ -23,7 +23,7 @@
 #include "ui_MainWindow.h"
 
 #include "rfcloader.h"
-#include "mdichild.h"
+#include <RfcDocument.h>
 #include "cdialogsetdirectory.h"
 #include "cdialogfind.h"
 #include "RfcView.h"
@@ -112,13 +112,13 @@ void MainWindow::openRfc()
     QFileInfo qFileInfo(fileName);
 
     if (!fileName.isEmpty()) {
-        MdiChild* existing = findMdiChild(fileName);
+        RfcDocument* existing = findMdiChild(fileName);
         if (existing) {
             ui->tabWidget->setCurrentWidget(existing);
             return;
         }
 
-        MdiChild* child = createMdiChild(qFileInfo.fileName());
+        RfcDocument* child = createMdiChild(qFileInfo.fileName());
         child->setCurrentFont(m_qFont);
         if (child->loadFile(fileName)) {
             statusBar()->showMessage(tr("File loaded"), 2000);
@@ -142,7 +142,7 @@ void MainWindow::getRfc()
 
 void MainWindow::closeRfc()
 {
-    MdiChild* pMdiChild = activeMdiChild();
+    RfcDocument* pMdiChild = activeMdiChild();
 
     if (pMdiChild) {
         ui->tabWidget->removeTab(ui->tabWidget->currentIndex());
@@ -153,7 +153,7 @@ void MainWindow::closeRfc()
 
 void MainWindow::print()
 {
-    MdiChild* pMdiChild = activeMdiChild();
+    RfcDocument* pMdiChild = activeMdiChild();
     if (pMdiChild) {
         QPrinter printer(QPrinter::HighResolution);
 
@@ -174,14 +174,14 @@ void MainWindow::print()
 
 void MainWindow::forward()
 {
-    MdiChild* pMdiChild = activeMdiChild();
+    RfcDocument* pMdiChild = activeMdiChild();
     if (pMdiChild)
         pMdiChild->m_pTextEdit->forward();
 }
 
 void MainWindow::backward()
 {
-    MdiChild* pMdiChild = activeMdiChild();
+    RfcDocument* pMdiChild = activeMdiChild();
     if (pMdiChild)
         pMdiChild->m_pTextEdit->backward();
 }
@@ -205,7 +205,7 @@ void MainWindow::findPrevious()
 
     QString qTextToFind = m_pDialogFind->GetTextToFind();
     iOptionFlags = m_pDialogFind->GetOptionFlags();
-    MdiChild* pMdiChild = activeMdiChild();
+    RfcDocument* pMdiChild = activeMdiChild();
     if (pMdiChild && !qTextToFind.isEmpty()) {
         iOptionFlags |= FIND_OPTIONSFLAG_CURSOR | FIND_OPTIONSFLAG_BACKWARD;
         bResult = pMdiChild->FindText(qTextToFind, iOptionFlags);
@@ -223,7 +223,7 @@ void MainWindow::findNext()
 
     QString qTextToFind = m_pDialogFind->GetTextToFind();
     iOptionFlags = m_pDialogFind->GetOptionFlags();
-    MdiChild* pMdiChild = activeMdiChild();
+    RfcDocument* pMdiChild = activeMdiChild();
     if (pMdiChild && !qTextToFind.isEmpty()) {
         bResult = pMdiChild->FindText(qTextToFind, iOptionFlags);
         if (!bResult)
@@ -239,12 +239,12 @@ void MainWindow::findNext()
 void MainWindow::setFont()
 {
     bool bOK;
-    MdiChild* pMDIChild;
+    RfcDocument* pMDIChild;
     QFont qFont = QFontDialog::getFont(&bOK, m_qFont, this);
     m_qFont = qFont;
     if (bOK) {
         for (int i = 0; i < ui->tabWidget->count(); i++) {
-            pMDIChild = qobject_cast<MdiChild*>(ui->tabWidget->widget(i));
+            pMDIChild = qobject_cast<RfcDocument*>(ui->tabWidget->widget(i));
             pMDIChild->setCurrentFont(m_qFont);
         }
     }
@@ -362,7 +362,7 @@ void MainWindow::RFCLoad(uint32_t iRFCNum)
 
     // Check if the required RFC is not yet opened
     for (int i = 0; i < ui->tabWidget->count(); i++) {
-        MdiChild* mdiChild = qobject_cast<MdiChild*>(ui->tabWidget->widget(i));
+        RfcDocument* mdiChild = qobject_cast<RfcDocument*>(ui->tabWidget->widget(i));
         qFileInfo.setFile(mdiChild->currentFile());
         if (qFileInfo.fileName() == qFilename) {
             ui->tabWidget->setCurrentWidget(mdiChild);
@@ -384,7 +384,7 @@ void MainWindow::RFCStart(const QString& qFilename)
 void MainWindow::RFCReady(const QString& qFilename)
 {
     QFileInfo qFileInfo(qFilename);
-    MdiChild* child = createMdiChild(qFileInfo.fileName());
+    RfcDocument* child = createMdiChild(qFileInfo.fileName());
     child->setCurrentFont(m_qFont);
     if (child->loadFile(qFilename)) {
         child->show();
@@ -401,9 +401,9 @@ void MainWindow::updateRFCProgress(int bytesRead, int totalBytes)
     m_pProgressBar->setValue(bytesRead);
 }
 
-MdiChild* MainWindow::createMdiChild(const QString& qTitle)
+RfcDocument* MainWindow::createMdiChild(const QString& qTitle)
 {
-    MdiChild* child = new MdiChild();
+    RfcDocument* child = new RfcDocument();
     ui->tabWidget->addTab(child, qTitle);
 
     connect(child, SIGNAL(copyAvailable(bool)),
@@ -415,18 +415,18 @@ MdiChild* MainWindow::createMdiChild(const QString& qTitle)
     return child;
 }
 
-MdiChild* MainWindow::activeMdiChild()
+RfcDocument* MainWindow::activeMdiChild()
 {
 
-    return qobject_cast<MdiChild*>(ui->tabWidget->currentWidget());
+    return qobject_cast<RfcDocument*>(ui->tabWidget->currentWidget());
 }
 
-MdiChild* MainWindow::findMdiChild(const QString& fileName)
+RfcDocument* MainWindow::findMdiChild(const QString& fileName)
 {
     QString canonicalFilePath = QFileInfo(fileName).canonicalFilePath();
 
     for (int i = 0; i < ui->tabWidget->count(); i++) {
-        MdiChild* mdiChild = qobject_cast<MdiChild*>(ui->tabWidget->widget(i));
+        RfcDocument* mdiChild = qobject_cast<RfcDocument*>(ui->tabWidget->widget(i));
         if (mdiChild->currentFile() == canonicalFilePath)
             return mdiChild;
     }

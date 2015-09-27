@@ -34,6 +34,7 @@ class MainWindow;
 }
 //class QWorkspace;
 class MdiChild;
+class RfcDocument;
 //class QSignalMapper;
 class QRFCLoader;
 class QProgressBar;
@@ -81,15 +82,15 @@ private slots:
     void RFCStart(const QString& qFilename);
     void updateRFCProgress(int bytesRead, int totalBytes);
 
-    MdiChild* createMdiChild(const QString& qTitle);
+    RfcDocument* createMdiChild(const QString& qTitle);
 
 private:
     void readSettings();
     void writeSettings();
     void createStatusBar();
 
-    MdiChild* activeMdiChild();
-    MdiChild* findMdiChild(const QString& fileName);
+    RfcDocument* activeMdiChild();
+    RfcDocument* findMdiChild(const QString& fileName);
 
     Ui::MainWindow* ui;
 

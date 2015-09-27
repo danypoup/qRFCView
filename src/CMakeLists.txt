@@ -21,24 +21,24 @@
 # just to show heders in some IDE's; otherwice redundant
 set(${PROJECT_NAME}_HEADERS
     MainWindow.h
+    RfcDocument.h
     RfcView.h
     TitleItem.h
     TitleModel.h
     cdialogfind.h
     cdialogsetdirectory.h
-    mdichild.h
     rfcloader.h
 )
 
 set(${PROJECT_NAME}_SOURCES
     MainWindow.cpp
+    RfcDocument.cpp
     RfcView.cpp
     TitleItem.cpp
     TitleModel.cpp
     cdialogfind.cpp
     cdialogsetdirectory.cpp
     main.cpp
-    mdichild.cpp
     rfcloader.cpp
 )
 

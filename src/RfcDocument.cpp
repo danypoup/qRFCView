@@ -19,6 +19,9 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+#include "RfcDocument.h"
+#include "ui_RfcDocument.h"
+
 #include <QtGui>
 #include <QPainter>
 #include <QFontMetrics>
@@ -26,36 +29,45 @@
 #include <QMessageBox>
 #include <QPrinter>
 
-#include "mdichild.h"
 #include "TitleModel.h"
 #include "TitleItem.h"
 #include "RfcView.h"
 #include "cdialogfind.h"
 
-MdiChild::MdiChild(QWidget* pParent)
-    : QSplitter(pParent)
+RfcDocument::RfcDocument(QWidget* parent)
+    : QWidget(parent)
+    , ui(new Ui::RfcDocument)
 {
-    m_pTreeView = new QTreeView;
-    m_pTextEdit = new RfcView;
+    ui->setupUi(this);
+
+    m_pTreeView = ui->treeView; //new QTreeView;
+    m_pTextEdit = ui->textEdit; //new RfcView;
     m_pTitleModel = NULL;
     m_iNbPages = 0;
-    addWidget(m_pTreeView);
-    addWidget(m_pTextEdit);
-    setStretchFactor(0, 0);
-    setStretchFactor(1, 1);
-
     setAttribute(Qt::WA_DeleteOnClose);
 }
 
-MdiChild::~MdiChild()
+RfcDocument::~RfcDocument()
 {
     if (m_pTitleModel)
         delete m_pTitleModel;
-    delete m_pTreeView;
-    delete m_pTextEdit;
+
+    delete ui;
 }
 
-bool MdiChild::loadFile(const QString& fileName)
+void RfcDocument::changeEvent(QEvent* e)
+{
+    QWidget::changeEvent(e);
+    switch (e->type()) {
+    case QEvent::LanguageChange:
+        ui->retranslateUi(this);
+        break;
+    default:
+        break;
+    }
+}
+
+bool RfcDocument::loadFile(const QString& fileName)
 {
     QFile file(fileName);
     QString qText;
@@ -70,6 +82,7 @@ bool MdiChild::loadFile(const QString& fileName)
     ParseRFCText(file, qText);
     file.close();
 
+    // TODO: check & delete old model!
     m_pTreeView->setModel(m_pTitleModel);
     m_pTreeView->show();
 
@@ -85,12 +98,12 @@ bool MdiChild::loadFile(const QString& fileName)
     return true;
 }
 
-QString MdiChild::userFriendlyCurrentFile()
+QString RfcDocument::userFriendlyCurrentFile()
 {
     return strippedName(curFile);
 }
 
-void MdiChild::closeEvent(QCloseEvent* event)
+void RfcDocument::closeEvent(QCloseEvent* event)
 {
     event->accept();
     /*
@@ -101,7 +114,7 @@ void MdiChild::closeEvent(QCloseEvent* event)
     }*/
 }
 
-void MdiChild::setCurrentFile(const QString& fileName)
+void RfcDocument::setCurrentFile(const QString& fileName)
 {
     curFile = QFileInfo(fileName).canonicalFilePath();
     m_pTextEdit->document()->setModified(false);
@@ -110,34 +123,34 @@ void MdiChild::setCurrentFile(const QString& fileName)
     m_qFileName = fileName;
 }
 
-QString MdiChild::strippedName(const QString& fullFileName)
+QString RfcDocument::strippedName(const QString& fullFileName)
 {
     return QFileInfo(fullFileName).fileName();
 }
 
-void MdiChild::copy()
+void RfcDocument::copy()
 {
     m_pTextEdit->copy();
 }
 
-bool MdiChild::hasSelection()
+bool RfcDocument::hasSelection()
 {
     return m_pTextEdit->textCursor().hasSelection();
 }
 
-void MdiChild::goToTitle(const QModelIndex& qModelIndex)
+void RfcDocument::goToTitle(const QModelIndex& qModelIndex)
 {
     CTitleItem* pChildItem = static_cast<CTitleItem*>(qModelIndex.internalPointer());
 
     m_pTextEdit->scrollToAnchor2(pChildItem->GetAnchor());
 }
 
-void MdiChild::goToAnchor(const QUrl& qURL)
+void RfcDocument::goToAnchor(const QUrl& qURL)
 {
     qDebug() << qURL.toString();
 }
 
-void MdiChild::setCurrentFont(const QFont& qFont)
+void RfcDocument::setCurrentFont(const QFont& qFont)
 {
     QTextCursor cursor(m_pTextEdit->textCursor());
 
@@ -148,7 +161,7 @@ void MdiChild::setCurrentFont(const QFont& qFont)
     m_pTextEdit->document()->setDefaultFont(qFont);
 }
 
-bool MdiChild::ParseRFCText(const QFile& qFile, QString& qOutput)
+bool RfcDocument::ParseRFCText(const QFile& qFile, QString& qOutput)
 {
     QTextStream qInStream((QFile*)&qFile);
     QString qLine;
@@ -260,7 +273,7 @@ bool MdiChild::ParseRFCText(const QFile& qFile, QString& qOutput)
     return true;
 }
 
-bool MdiChild::FindText(QString& qTextToFind, uint32_t iOptionFlags)
+bool RfcDocument::FindText(QString& qTextToFind, uint32_t iOptionFlags)
 {
     QRegExp qRegExp;
     QTextDocument::FindFlags qFindFlags = 0;
@@ -284,7 +297,7 @@ bool MdiChild::FindText(QString& qTextToFind, uint32_t iOptionFlags)
     return m_pTextEdit->find(qTextToFind, qFindFlags);
 }
 
-void MdiChild::Print(QPrinter* qPrinter, bool bAll, int fromPage, int toPage)
+void RfcDocument::Print(QPrinter* qPrinter, bool bAll, int fromPage, int toPage)
 {
     QFile qFile(m_qFileName);
     if (!qFile.open(QFile::ReadOnly | QFile::Text)) {
