@@ -53,3 +53,8 @@ endif()
 
 # Generate summary of required/optional/runtime packages, enabled/disabled features.
 include(ProjectSummary)
+
+
+if(OPT_PRINTSYSINFO)
+    include(CMakePrintSystemInformation)
+endif(OPT_PRINTSYSINFO)
