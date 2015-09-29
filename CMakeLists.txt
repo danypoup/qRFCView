@@ -21,16 +21,15 @@
 project(qRFCView CXX)
 cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
 
+message(STATUS "Using cmake v${CMAKE_VERSION}")
+message(STATUS "Started on ${CMAKE_SYSTEM_NAME} (${CMAKE_SYSTEM_VERSION})")
 
+# setup project strings
 set(PROJECT_ORG_NAME "TrollSoft")
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake/Common/Includes/")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake/Common/Modules/")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake/Includes/")
-
-message(STATUS "Using cmake v${CMAKE_VERSION}")
-message(STATUS "Started on ${CMAKE_SYSTEM_NAME} (${CMAKE_SYSTEM_VERSION})")
-message(STATUS "Configuring '${PROJECT_NAME}' v${PROJECT_VERSION} project")
 
 # Enable info gathering for final summary
 include(FeatureSummary)
@@ -43,6 +42,18 @@ include(ProjectSetup)
 include(ProjectVCS-id)
 # Look for and setup dependencies like 3rd party libraries etc.
 include(ProjectDependencies)
+
+
+# set project version number
+set(PROJECT_VERSION_MAJOR "0")
+set(PROJECT_VERSION_MINOR "64")
+set(PROJECT_VERSION_DOTPATCH "")
+if(NOT ${VCS_BRANCH_NAME} STREQUAL "")
+    set(PROJECT_VERSION_DOTPATCH "${PROJECT_VERSION_DOTPATCH}-${VCS_BRANCH_NAME}")
+endif()
+set(PROJECT_VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}${PROJECT_VERSION_DOTPATCH}")
+message(STATUS "Configuring '${PROJECT_NAME}' v${PROJECT_VERSION} project")
+
 
 # Local project settings
 set(CMAKE_INCLUDE_CURRENT_DIR ON)

@@ -33,6 +33,7 @@ int main(int argc, char* argv[])
 
     QApplication app(argc, argv);
     app.setApplicationName(QString(appName));
+    app.setApplicationVersion(QString(appVersion));
     app.setOrganizationName(QString(orgName));
 
     MainWindow mainWin;
