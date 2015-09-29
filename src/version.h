@@ -22,6 +22,7 @@
 
 extern const char* const appName;
 extern const char* const appVersion;
+extern const char* const appBuildTimestamp;
 
 extern const char* const orgName;
 

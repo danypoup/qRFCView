@@ -27,5 +27,6 @@
 
 const char* const appName = "@PROJECT_NAME@";
 const char* const appVersion = "@PROJECT_VERSION@";
+const char* const appBuildTimestamp = "@VCS_ID@";
 
 const char* const orgName = "@PROJECT_ORG_NAME@";
