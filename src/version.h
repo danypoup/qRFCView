@@ -1,7 +1,5 @@
 /*
  * qRFCView, A smart IETF RFC viewer based on the Qt library.
- * Copyright (C) 2005 Mitsubishi Electric ITE-TCL,
- *                    R. Rollet (rollet@tcl.ite.mee.com)
  * Copyright (C) 2015 Ľubomír Carik <Lubomir.Carik@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,32 +17,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "MainWindow.h"
-#include "version.h"
+#ifndef VERSION_H
+#define VERSION_H
 
-#include <QFile>
-#include <QIcon>
-#include <QApplication>
-#include <QFileInfo>
+extern const char* const appName;
 
-int main(int argc, char* argv[])
-{
-    Q_INIT_RESOURCE(rfcview);
+extern const char* const orgName;
 
-    QApplication app(argc, argv);
-    app.setApplicationName(QString(appName));
-    app.setOrganizationName(QString(orgName));
-
-    MainWindow mainWin;
-    mainWin.show();
-
-    if (argc > 1) {
-        if (QFile::exists(argv[1])) {
-            mainWin.RFCReady(argv[1]);
-            QFileInfo qFileInfo(argv[1]);
-            mainWin.SetCurrentDir(qFileInfo.dir());
-        }
-    }
-
-    return app.exec();
-}
+#endif // VERSION_H

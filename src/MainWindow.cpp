@@ -301,7 +301,7 @@ void MainWindow::updateMenus()
 void MainWindow::readSettings()
 {
     int i;
-    QSettings settings("MELCO", "qRFCView");
+    QSettings settings;
     QPoint pos = settings.value("pos", QPoint(200, 200)).toPoint();
     QSize size = settings.value("size", QSize(400, 400)).toSize();
     m_qFont.setFamily(settings.value("Font_family", m_qFont.family()).toString());
@@ -331,7 +331,7 @@ void MainWindow::readSettings()
 
 void MainWindow::writeSettings()
 {
-    QSettings settings("MELCO", "qRFCView");
+    QSettings settings;
     settings.setValue("pos", pos());
     settings.setValue("size", size());
     settings.setValue("Font_family", m_qFont.family());

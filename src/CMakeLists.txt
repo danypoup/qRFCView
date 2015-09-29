@@ -58,6 +58,17 @@ if(WIN32)
     )
 endif()
 
+# generate version/revision information
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/version.cpp.in
+    ${CMAKE_CURRENT_BINARY_DIR}/version.cpp
+    @ONLY
+    NEWLINE_STYLE LF
+)
+list(APPEND ${PROJECT_NAME}_SOURCES
+    ${CMAKE_CURRENT_BINARY_DIR}/version.cpp
+)
+
 add_executable(${PROJECT_NAME}
     ${${PROJECT_NAME}_HEADERS}
     ${${PROJECT_NAME}_SOURCES}

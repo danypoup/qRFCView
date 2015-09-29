@@ -21,6 +21,9 @@
 project(qRFCView CXX)
 cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
 
+
+set(PROJECT_ORG_NAME "TrollSoft")
+
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake/Common/Includes/")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake/Common/Modules/")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake/Includes/")
